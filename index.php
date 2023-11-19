@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="img/logo.png">
-
 </head>
 
 <body>

@@ -26,13 +26,16 @@
                         <input type="password" name="password" placeholder="Password" class="ref-input mb-3 w-100 me-5">
                     </div>
                     <div class="w-100 mt-2">
-                        <button class="btn-login w-100 me-5 d-flex align-items-center justify-content-center" type="submit" onclick="submitFn()">
+                        <button type="submit" class="btn-login w-100 me-5 d-flex align-items-center justify-content-center" onclick="submitFn()">
                             <span id="login">Login</span>
                         </button>
                     </div>
                 </form>
-                <div class="container">
+                <div class="container d-flex justify-content-center flex-column">
                     <p>Don't have an account? <strong><a href="seeker-signup.php">Create one.</a></strong></p>
+                    <a href="../index.php" class="d-flex justify-content-start">
+                        <i class="bi bi-arrow-left"></i>&nbsp;Back
+                    </a>
                 </div>
             </div>
         </div>

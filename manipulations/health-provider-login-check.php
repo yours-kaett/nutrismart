@@ -11,9 +11,9 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     }
     $username = validate($_POST['username']);
     $password = validate($_POST['password']);
-    $password = md5($password); //Encryption
+    $password = md5($password);
     try {
-        $stmt = $conn->prepare("SELECT * FROM tbl_seeker WHERE username = ? AND password = ?");
+        $stmt = $conn->prepare("SELECT * FROM tbl_health_provider WHERE username = ? AND password = ?");
         if (!$stmt) {
             throw new Exception("Database query error: " . $conn->error);
         }
@@ -24,26 +24,26 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $result = $stmt->get_result();
         if ($result->num_rows === 1) {
             $row = $result->fetch_assoc();
-            if ($username === $row['username'] && $password === $row['password']) {
-                
-                $_SESSION['username'] = $row['username'];
-                $_SESSION['id'] = $row['id']; //Global Use
+            if ($row['username'] === $username && $row['password'] === $password) {
 
-                header("Location: ../pages/seeker/home.php");
+                $_SESSION['username'] = $row['username'];
+                $_SESSION['id'] = $row['id'];
+
+                header("Location: ../pages/health-provider/home.php");
                 exit();
             } else {
-                header("Location: ../pages/seeker-login.php?error");
+                header("Location: ../pages/health-provider-login.php?error");
                 exit();
             }
         } else {
-            header("Location: ../pages/seeker-login.php?error");
+            header("Location: ../pages/health-provider-login.php?error");
             exit();
         }
     } catch (Exception $e) {
-        header("Location: ../pages/seeker-login.php?error=" . urlencode($e->getMessage()));
+        header("Location: ../pages/health-provider-login.php?error=" . urlencode($e->getMessage()));
         exit();
     }
 } else {
-    header("Location: ../pages/seeker-login.php");
+    header("Location: ../pages/health-provider-login.php");
     exit();
 }

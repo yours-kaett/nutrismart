@@ -1,5 +1,5 @@
 <?php
-include '../db_conn.php';
+include '../../db_conn.php';
 session_start();
 if ($_SESSION['username']) {
 ?>
@@ -7,7 +7,14 @@ if ($_SESSION['username']) {
     <html lang="en">
 
     <head>
-        <?php include "../includes/head.php" ?>
+        <title>Nutrismart</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../bootstrap/js/bootstrap.bundle.min.js">
+        <link rel="stylesheet" href="../../bootstrap-icons/bootstrap-icons.css">
+        <link rel="stylesheet" href="../../style.css">
+        <link rel="icon" href="../../img/logo.png">
     </head>
 
     <body>
@@ -84,7 +91,7 @@ if ($_SESSION['username']) {
         </main>
         <footer>
             <div class="d-flex align-items-center justify-content-between bottom-0 fixed-bottom px-3">
-                <a href="seeker-home.php">
+                <a href="home.php">
                     <i class="bi bi-house-door fs-4"></i>
                 </a>
                 <a href="goals.php">
@@ -112,7 +119,7 @@ if ($_SESSION['username']) {
                     document.getElementById('table').innerHTML = xhr.responseText;
                 }
             };
-            xhr.open('GET', '../manipulations/filter_records_day.php?selectedDate=' + selectedDate, true);
+            xhr.open('GET', '../../manipulations/filter_records_day.php?selectedDate=' + selectedDate, true);
             xhr.send();
         });
     </script>
@@ -121,5 +128,5 @@ if ($_SESSION['username']) {
 
 <?php
 } else {
-    header("Location: ../index.php");
+    header("Location: ../../index.php");
 }

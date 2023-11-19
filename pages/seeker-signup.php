@@ -36,9 +36,7 @@
                     <div class="w-100 mt-2">
                         <a href="#">
                             <button class="btn-login w-100 me-5" type="submit">
-                                <span>
-                                    Create
-                                </span>
+                                Create
                             </button>
                         </a>
                     </div>

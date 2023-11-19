@@ -27,7 +27,7 @@ if (isset($_POST['meal_id']) && isset($_POST['month']) && isset($_POST['day']) &
     $stmt->bind_param('iiiissssi', $meal_id, $month, $day, $year, $time, $food_name, $carbohydrates, $blood_sugar_level, $_SESSION['id']);
     $stmt->execute();
     $result = $stmt->get_result();
-    header("Location: ../pages/dietary-logging.php?success");
+    header("Location: ../pages/seeker/dietary-logging.php?success");
     exit();
     
 } else {

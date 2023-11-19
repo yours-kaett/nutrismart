@@ -20,10 +20,9 @@ if (isset($_POST['date']) && isset($_POST['title']) && isset($_POST['description
     $stmt->bind_param('sssi', $date, $title, $description, $_SESSION['id']);
     $stmt->execute();
     $result = $stmt->get_result();
-    header("Location: ../pages/goals.php?success");
+    header("Location: ../pages/seeker/goals.php?success");
     exit();
-    
 } else {
-    header("Location: ../pages/goals.php?error=Unknown error occured.");
+    header("Location: ../pages/seeker/goals.php?error");
     exit();
 }
