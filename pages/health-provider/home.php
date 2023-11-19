@@ -1,5 +1,5 @@
 <?php
-include '../db_conn.php';
+include '../../db_conn.php';
 session_start();
 if ($_SESSION['username']) {
 ?>
@@ -7,7 +7,14 @@ if ($_SESSION['username']) {
     <html lang="en">
 
     <head>
-        <?php include "../includes/head.php" ?>
+        <title>Nutrismart</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../bootstrap/js/bootstrap.bundle.min.js">
+        <link rel="stylesheet" href="../../bootstrap-icons/bootstrap-icons.css">
+        <link rel="stylesheet" href="../../style.css">
+        <link rel="icon" href="../../img/logo.png">
     </head>
 
     <body>
@@ -21,21 +28,9 @@ if ($_SESSION['username']) {
         </header>
         <main>
             <div class="container ref min-vh-100">
-                <img src="../img/logo.png" width="90" alt="Nutrismart Logo">
+                <img src="../../img/logo.png" width="90" alt="Nutrismart Logo">
                 <div class="card mt-4">
                     <div class="w-100 d-flex justify-content-center flex-column">
-                        <a href="dietary-logging.php">
-                            <button class="btn-outline mb-2">
-                                <i class="bi bi-diagram-3">&nbsp; </i>Setup Dietary Logging
-                            </button>
-                        </a>
-                        <a href="goals.php">
-                            <button class="btn-a mb-2">
-                                <span>
-                                    Set Goals
-                                </span>
-                            </button>
-                        </a>
                         <a href="meal-recommendations.php">
                             <button class="btn-a mb-2">
                                 <span>
@@ -43,11 +38,9 @@ if ($_SESSION['username']) {
                                 </span>
                             </button>
                         </a>
-                        <a href="dietary-monitoring.php">
-                            <button class="btn-a mb-2">
-                                <span>
-                                    Dietary Monitoring
-                                </span>
+                        <a href="../../logout.php">
+                            <button class="btn-outline">
+                                Logout
                             </button>
                         </a>
                     </div>
@@ -65,5 +58,5 @@ if ($_SESSION['username']) {
 
 <?php
 } else {
-    header("Location: ../index.php");
+    header("Location: ../../index.php");
 }

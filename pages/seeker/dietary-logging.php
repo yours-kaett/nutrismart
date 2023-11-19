@@ -1,5 +1,5 @@
 <?php
-include '../db_conn.php';
+include '../../db_conn.php';
 session_start();
 if ($_SESSION['username']) {
 
@@ -8,7 +8,14 @@ if ($_SESSION['username']) {
     <html lang="en">
 
     <head>
-        <?php include "../includes/head.php" ?>
+        <title>Nutrismart</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../bootstrap/js/bootstrap.bundle.min.js">
+        <link rel="stylesheet" href="../../bootstrap-icons/bootstrap-icons.css">
+        <link rel="stylesheet" href="../../style.css">
+        <link rel="icon" href="../../img/logo.png">
     </head>
 
     <body>
@@ -22,7 +29,7 @@ if ($_SESSION['username']) {
         </header>
         <main>
             <div class="container ref mt-5">
-                <h3 class="fw-bold mt-5 mb-4">Setup Dietary Logging</h3>
+                <h3 class="fw-bold mt-5 mb-4">Dietary Logging</h3>
                 <?php
                 if (isset($_GET['success'])) {
                 ?>
@@ -38,7 +45,7 @@ if ($_SESSION['username']) {
                 }
                 ?>
                 <div class="card mt-2">
-                    <form action="../manipulations/dietary-logging-check.php" method="POST" class="dietary-logs p-4">
+                    <form action="../../manipulations/dietary-logging-check.php" method="POST" class="dietary-logs p-4">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div>
                                 <h6 class="small" style="color: #c3f0ff;">Month:</h6>
@@ -88,7 +95,7 @@ if ($_SESSION['username']) {
                             <input type="number" name="blood_sugar_level" placeholder="Type here..." class="ref-input small mb-3 w-100" required>
                         </div>
                         <div class="w-100 mt-2">
-                            <button class="btn-login w-100 d-flex align-items-center justify-content-center" type="submit">
+                            <button type="submit" class="btn-login w-100 d-flex align-items-center justify-content-center">
                                 <span id="save">Save</span>
                             </button>
                         </div>
@@ -103,7 +110,7 @@ if ($_SESSION['username']) {
         </main>
         <footer>
             <div class="d-flex align-items-center justify-content-between fixed-bottom px-3">
-                <a href="seeker-home.php">
+                <a href="home.php">
                     <i class="bi bi-house-door fs-4"></i>
                 </a>
                 <a href="goals.php">
@@ -121,8 +128,8 @@ if ($_SESSION['username']) {
             </div>
         </footer>
 
-        <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="../script.js"></script>
+        <script src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../../script.js"></script>
 
         <script>
             // Populate Month options

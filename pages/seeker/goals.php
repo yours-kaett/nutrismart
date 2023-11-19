@@ -1,5 +1,5 @@
 <?php
-include '../db_conn.php';
+include '../../db_conn.php';
 session_start();
 if ($_SESSION['username']) {
 
@@ -8,7 +8,14 @@ if ($_SESSION['username']) {
     <html lang="en">
 
     <head>
-        <?php include "../includes/head.php" ?>
+        <title>Nutrismart</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../bootstrap/js/bootstrap.bundle.min.js">
+        <link rel="stylesheet" href="../../bootstrap-icons/bootstrap-icons.css">
+        <link rel="stylesheet" href="../../style.css">
+        <link rel="icon" href="../../img/logo.png">
     </head>
 
     <body>
@@ -35,38 +42,40 @@ if ($_SESSION['username']) {
                         }
                         if (isset($_GET['error'])) {
                         ?>
-                            <p class="text-white text-center bg-danger p-2 mb-3 w-100"><?php echo $_GET['error'] ?></p>
+                            <p class="text-white text-center bg-danger p-2 mb-3 w-100" data-bs-toggle="alert">
+                                <?php echo $_GET['error'], 'Error setting up goal.' ?>
+                            </p>
                         <?php
                         }
                         ?>
-                            <?php
-                            $stmt = $conn->prepare(' SELECT * FROM tbl_goals WHERE seeker_id = ? ');
-                            $stmt->bind_param('i', $_SESSION['id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-                            while ($row = $result->fetch_assoc()) {
-                                $date = $row['date'];
-                                $title = $row['title'];
-                                $description = $row['description'];
-                                echo '
+                        <?php
+                        $stmt = $conn->prepare(' SELECT * FROM tbl_goals WHERE seeker_id = ? ');
+                        $stmt->bind_param('i', $_SESSION['id']);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        while ($row = $result->fetch_assoc()) {
+                            $date = $row['date'];
+                            $title = $row['title'];
+                            $description = $row['description'];
+                            echo '
                                     <hr />
                                     <h6>Date: ' . $date . '</h6>
                                     <h6>Title: ' . $title . '</h6>
                                     <h6>Description: ' . $description . '</h6>
                                 ';
-                            }
-                            ?>
+                        }
+                        ?>
                     </div>
                 </div>
 
-                <div class="modal fade" id="addGoalModal" tabindex="-1" aria-labelledby="addGoalModalLabel" aria-hidden="true">
+                <div class="modal" id="addGoalModal" tabindex="-1" aria-labelledby="addGoalModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
+                        <div class="modal-content rounded-0">
                             <div class="modal-header">
                                 <h6 style="color: #c3f0ff;" class="modal-title" id="addGoalModalLabel">Set Goal</h6>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form action="../manipulations/set-goal-check.php" method="POST" class="p-4">
+                            <form action="../../manipulations/goal-check.php" method="POST" class="p-4">
                                 <div class="w-100">
                                     <label class="small" style="color: #c3f0ff;">Date</label>
                                     <input name="date" type="date" class="ref-input w-100 mb-2" style="font-size: 12px;" id="selectedDate">
@@ -80,7 +89,7 @@ if ($_SESSION['username']) {
                                     <textarea name="description" id="description" cols="42" rows="3" class="small ps-2 pt-2" style="background-color: #012054d4; color: #c3ffeb; border: none;"></textarea>
                                 </div>
                                 <div class="w-100 mt-2">
-                                    <button class="btn-login w-100 d-flex align-items-center justify-content-center" type="submit">
+                                    <button type="submit" class="btn-login w-100 d-flex align-items-center justify-content-center">
                                         <span id="save">Set</span>
                                     </button>
                                 </div>
@@ -97,7 +106,7 @@ if ($_SESSION['username']) {
         </main>
         <footer>
             <div class="d-flex align-items-center justify-content-between fixed-bottom px-3">
-                <a href="seeker-home.php">
+                <a href="home.php">
                     <i class="bi bi-house-door fs-4"></i>
                 </a>
                 <a href="#" style="color: #c3ffeb !important;">
@@ -118,8 +127,8 @@ if ($_SESSION['username']) {
             </button>
         </footer>
 
-        <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="../script.js"></script>
+        <script src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../../script.js"></script>
         <script>
         </script>
     </body>
@@ -128,5 +137,5 @@ if ($_SESSION['username']) {
 
 <?php
 } else {
-    header('Location ../index.php');
+    header('Location ../../index.php');
 }

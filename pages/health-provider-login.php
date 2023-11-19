@@ -19,20 +19,18 @@
                         <input type="password" name="password" placeholder="Password" class="ref-input mb-3 w-100 me-5">
                     </div>
                     <div class="w-100 mt-2">
-                        <a href="#">
-                            <button class="btn-login w-100 me-5" type="submit">
-                                <span>
-                                    Login &nbsp;<i class="bi bi-box-arrow-in-right"></i>
-                                </span>
-                            </button>
-                        </a>
+                        <button class="btn-login w-100 me-5" type="submit">
+                            <span>
+                                Login &nbsp;<i class="bi bi-box-arrow-in-right"></i>
+                            </span>
+                        </button>
                     </div>
                 </form>
                 <div class="container d-flex justify-content-center flex-column">
-                    <a href="#" class="d-flex justify-content-start mb-3">
-                        Forgot password?
+                    <p>Don't have an account? <strong><a href="health-provider-signup.php">Create one.</a></strong></p>
+                    <a href="../index.php" class="d-flex justify-content-start">
+                        <i class="bi bi-arrow-left"></i>&nbsp;Back
                     </a>
-                    <p>Don't have an account? <strong><a href="#">Create one.</a></strong></p>
                 </div>
             </div>
         </div>
