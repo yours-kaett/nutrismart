@@ -1,7 +1,7 @@
 <?php
 include '../../db_conn.php';
 session_start();
-if ($_SESSION['username']) {
+if ($_SESSION['id']) {
 
 ?>
     <!DOCTYPE html>
@@ -16,6 +16,7 @@ if ($_SESSION['username']) {
         <link rel="stylesheet" href="../../bootstrap-icons/bootstrap-icons.css">
         <link rel="stylesheet" href="../../style.css">
         <link rel="icon" href="../../img/logo.png">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     </head>
 
     <body>
@@ -46,23 +47,9 @@ if ($_SESSION['username']) {
                 ?>
                 <div class="card mt-2">
                     <form action="../../manipulations/dietary-logging-check.php" method="POST" class="dietary-logs p-4">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div>
-                                <h6 class="small" style="color: #c3f0ff;">Month:</h6>
-                                <select class="form-select small" style="width: 100px;" name="month" id="month"></select>
-                            </div>
-                            <div>
-                                <h6 class="small" style="color: #c3f0ff;">Day:</h6>
-                                <select class="form-select small" style="width: 100px;" name="day" id="day"></select>
-                            </div>
-                            <div>
-                                <h6 class="small" style="color: #c3f0ff;">Year:</h6>
-                                <select class="form-select small" style="width: 100px;" name="year" id="year"></select>
-                            </div>
-                        </div>
                         <div class="w-100">
                             <h6 class="small" style="color: #c3f0ff;">Meals:</h6>
-                            <select class="form-select mb-3 w-100 me-5" name="meal_id">
+                            <select class="form-select mb-3 w-100 me-5" name="meal_id" id="meal_id">
                                 <option disabled selected>- select meal -</option>
                                 <?php
                                 $stmt = $conn->prepare(' SELECT * FROM tbl_meal ');
@@ -80,19 +67,43 @@ if ($_SESSION['username']) {
                         </div>
                         <div class="w-100">
                             <label class="small mb-2" style="color: #c3f0ff;">Time</label>
-                            <input type="time" name="time" class="ref-input small mb-3 w-100" required>
+                            <input type="text" name="time" id="time" class="ref-input small mb-3 w-100" required>
                         </div>
                         <div class="w-100">
-                            <label class="small mb-2" style="color: #c3f0ff;">Food name</label>
-                            <input type="text" name="food_name" placeholder="Type here..." class="ref-input small mb-3 w-100" required>
+                            <label class="small mb-2" style="color: #c3f0ff;">Rice</label>
+                            <input type="text" name="rice" id="rice" class="ref-input small mb-3 w-100" required>
                         </div>
                         <div class="w-100">
-                            <label class="small mb-2" style="color: #c3f0ff;">Carbohydrates (g)</label>
-                            <input type="number" name="carbohydrates" placeholder="Type here..." class="ref-input small mb-3 w-100" required>
+                            <label class="small mb-2" style="color: #c3f0ff;">Viand</label>
+                            <input type="text" name="viand" id="viand" class="ref-input small mb-3 w-100" required>
                         </div>
                         <div class="w-100">
-                            <label class="small mb-2" style="color: #c3f0ff;">Blood Sugar Level (mg)</label>
-                            <input type="number" name="blood_sugar_level" placeholder="Type here..." class="ref-input small mb-3 w-100" required>
+                            <label class="small mb-2" style="color: #c3f0ff;">Carbohydrates</label>
+                            <input type="text" name="carbohydrates" id="carbohydrates" class="ref-input small mb-3 w-100" required>
+                        </div>
+                        <div class="w-100">
+                            <label class="small mb-2" style="color: #c3f0ff;">Protein</label>
+                            <input type="text" name="protein" id="protein" class="ref-input small mb-3 w-100" required>
+                        </div>
+                        <div class="w-100">
+                            <label class="small mb-2" style="color: #c3f0ff;">Fat</label>
+                            <input type="text" name="fat" id="fat" class="ref-input small mb-3 w-100" required>
+                        </div>
+                        <div class="w-100">
+                            <label class="small mb-2" style="color: #c3f0ff;">Fiber</label>
+                            <input type="text" name="fiber" id="fiber" class="ref-input small mb-3 w-100" required>
+                        </div>
+                        <div class="w-100">
+                            <label class="small mb-2" style="color: #c3f0ff;">Current Blood Sugar Level</label>
+                            <input type="text" name="blood_sugar_level" id="blood_sugar_level" class="ref-input small mb-3 w-100" required>
+                        </div>
+                        <div class="w-100">
+                            <?php
+                            date_default_timezone_set('Asia/Manila');
+                            $date = date("Y-m-j");
+                            ?>
+                            <label class="small mb-2" style="color: #c3f0ff;">Date</label>
+                            <input type="date" name="date" id="" value="<?php echo $date ?>" class="ref-input small mb-3 w-100" required>
                         </div>
                         <div class="w-100 mt-2">
                             <button type="submit" class="btn-login w-100 d-flex align-items-center justify-content-center">
@@ -132,44 +143,30 @@ if ($_SESSION['username']) {
         <script src="../../script.js"></script>
 
         <script>
-            // Populate Month options
-            const monthSelect = document.getElementById('month');
-            for (let i = 1; i <= 12; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = new Date(0, i - 1, 1).toLocaleString('en-US', {
-                    month: 'long'
+            $(document).ready(function () {
+                $('#meal_id').change(function () {
+                    var mealId = $(this).val();
+                    $.ajax({
+                        url: '../../manipulations/meal_data.php',
+                        method: 'POST',
+                        data: {meal_id: mealId},
+                        dataType: 'json',
+                        success: function (data) {
+                            $('#time').val(data.time);
+                            $('#rice').val(data.rice);
+                            $('#viand').val(data.viand);
+                            $('#carbohydrates').val(data.carbohydrates);
+                            $('#protein').val(data.protein);
+                            $('#fat').val(data.fat);
+                            $('#fiber').val(data.fiber);
+                            
+                        },
+                        error: function (error) {
+                            console.error('Error fetching data: ', error);
+                        }
+                    });
                 });
-                monthSelect.appendChild(option);
-            }
-            // Populate Day options (for initial Month)
-            const daySelect = document.getElementById('day');
-            updateDayOptions();
-            // Populate Year options (adjust range as needed)
-            const yearSelect = document.getElementById('year');
-            const currentYear = new Date().getFullYear();
-            for (let i = currentYear - 23; i <= currentYear + 23; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = i;
-                yearSelect.appendChild(option);
-            }
-            // Update Day options based on Month selection
-            monthSelect.addEventListener('change', function() {
-                updateDayOptions();
             });
-
-            function updateDayOptions() {
-                const selectedMonth = monthSelect.value;
-                const daysInMonth = new Date(new Date().getFullYear(), selectedMonth, 0).getDate();
-                daySelect.innerHTML = '';
-                for (let i = 1; i <= daysInMonth; i++) {
-                    const option = document.createElement('option');
-                    option.value = i;
-                    option.textContent = i;
-                    daySelect.appendChild(option);
-                }
-            }
         </script>
     </body>
 
@@ -178,4 +175,5 @@ if ($_SESSION['username']) {
 <?php
 } else {
     header('Location ../index.php');
+    exit;
 }

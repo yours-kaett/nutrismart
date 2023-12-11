@@ -2,7 +2,7 @@
 include '../db_conn.php';
 session_start();
 
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['id'])) {
     header("Location: ../index.php");
     exit();
 }
@@ -16,7 +16,7 @@ if (isset($_GET['selectedDate'])) {
             <thead class="bg-dark">
                 <tr>
                     <th class="small">Meal</th>
-                    <th class="small">Food</th>
+                    <th class="small">Rice</th>
                     <th class="small">Carbs</th>
                     <th class="small">BS lvl</th>
                     <th class="small">Time</th>

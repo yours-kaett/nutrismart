@@ -22,7 +22,7 @@
                     <a href="pages/seeker-login.php">
                         <button class="btn-a mb-2">
                             <span>
-                                <i class="bi bi-bandaid fs-5"></i>&nbsp; Seeker
+                                <i class="bi bi-bandaid fs-5"></i>&nbsp; Patient
                             </span>
                         </button>
                     </a>

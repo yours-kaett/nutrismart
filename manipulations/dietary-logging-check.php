@@ -3,9 +3,10 @@ include "../db_conn.php";
 
 session_start();
 
-if (isset($_POST['meal_id']) && isset($_POST['month']) && isset($_POST['day']) && 
-    isset($_POST['year']) && isset($_POST['time']) && isset($_POST['food_name']) && 
-    isset($_POST['carbohydrates']) && isset($_POST['blood_sugar_level'])) {
+if (isset($_POST['meal_id']) && isset($_POST['time']) && isset($_POST['rice']) && 
+    isset($_POST['viand']) && isset($_POST['carbohydrates']) && isset($_POST['protein']) && 
+    isset($_POST['fat']) && isset($_POST['fiber']) && isset($_POST['blood_sugar_level']) &&
+    isset($_POST['date'])) {
     function validate($data)
     {
         $data = trim($data);
@@ -13,18 +14,21 @@ if (isset($_POST['meal_id']) && isset($_POST['month']) && isset($_POST['day']) &
         $data = htmlspecialchars($data);
         return $data;
     }
+    $patient_id = $_SESSION['id'];
     $meal_id = validate($_POST['meal_id']);
-    $month = validate($_POST['month']);
-    $day = validate($_POST['day']);
-    $year = validate($_POST['year']);
     $time = validate($_POST['time']);
-    $food_name = validate($_POST['food_name']);
+    $rice = validate($_POST['rice']);
+    $viand = validate($_POST['viand']);
     $carbohydrates = validate($_POST['carbohydrates']);
+    $protein = validate($_POST['protein']);
+    $fat = validate($_POST['fat']);
+    $fiber = validate($_POST['fiber']);
     $blood_sugar_level = validate($_POST['blood_sugar_level']);
+    $date = validate($_POST['date']);
 
-    $stmt = $conn->prepare("INSERT INTO tbl_dietary_logging(meal_id, month, day, year, time, food_name, carbohydrates, blood_sugar_level, seeker_id) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param('iiiissssi', $meal_id, $month, $day, $year, $time, $food_name, $carbohydrates, $blood_sugar_level, $_SESSION['id']);
+    $stmt = $conn->prepare("INSERT INTO tbl_dietary_logging(meal_id, time, rice, viand, carbohydrates, protein, fat, fiber, blood_sugar_level, date, patient_id) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param('isssssssssi', $meal_id, $time, $rice, $viand, $carbohydrates, $protein, $fat, $fiber, $blood_sugar_level, $date, $patient_id);
     $stmt->execute();
     $result = $stmt->get_result();
     header("Location: ../pages/seeker/dietary-logging.php?success");

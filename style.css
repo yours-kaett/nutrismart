@@ -46,8 +46,8 @@ h6 {
     font-family: "Nunito", sans-serif;
 }
 
-h3, h6, hr {
-    color: var(--light-color);
+h3, h6, .span, hr {
+    color: var(--light-color) !important;
 }
 
 p {

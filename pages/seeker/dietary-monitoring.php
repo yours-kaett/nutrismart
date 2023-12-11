@@ -1,7 +1,8 @@
 <?php
 include '../../db_conn.php';
 session_start();
-if ($_SESSION['username']) {
+if ($_SESSION['id']) {
+    $patient_id = $_SESSION['id'];
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -27,65 +28,103 @@ if ($_SESSION['username']) {
             </div>
         </header>
         <main>
-            <div class="container ref mt-5">
+            <div class="ref mt-5 mb-5 min-vh-100">
                 <h3 class="fw-bold mt-5 mb-4">Dietary Monitoring</h3>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <input type="date" class="ref-input me-4" style="font-size: 12px;" id="selectedDate">
-                            <div>
-                                <button class="btn-outline btn-sm ps-3 pe-3 py-2" style="width: 100px;" type="button" id="day_Records">
-                                    <i class="bi bi-search"></i>&nbsp; Find</button>
-                            </div>
-                        </div>
+                <select class="form-select mb-3 w-50" id="selectedDate">
+                    <option disabled selected>- select date -</option>
+                    <?php
+                    $stmt = $conn->prepare(' SELECT date FROM tbl_dietary_logging WHERE patient_id = ? ');
+                    $stmt->bind_param('i', $patient_id);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    while ($rows = $result->fetch_assoc()) {
+                        $date = $rows['date'];
+                        echo '<option value=' . $date . '>' . $date . '</option>';
+                    }
+                    ?>
+                </select>
+                <div class="d-flex flex-column mt-2 ps-0">
+                    <span class="text-white fw-bold meal" data-meal-id="Breakfast">Breakfast</span>
+                    <span class="text-secondary small">Time: 
+                        <span class="text-white" id="time"></span>
+                    </span>
+                    <span class="text-secondary small">Rice: 
+                        <span class="text-white" id="rice"></span>
+                    </span>
+                    <span class="text-secondary small">Viand: 
+                        <span class="text-white" id="viand"></span>
+                    </span>
+                    <span class="text-secondary small">Carbohydrates: 
+                        <span class="text-white" id="carbohydrates"></span>
+                    </span>
+                    <span class="text-secondary small">Protein: 
+                        <span class="text-white" id="protein"></span>
+                    </span>
+                    <span class="text-secondary small">Fat: 
+                        <span class="text-white" id="fat"></span>
+                    </span>
+                    <span class="text-secondary small">Fiber: 
+                        <span class="text-white" id="fiber"></span>
+                    </span>
+                    <span class="text-secondary small">Blood Sugar Level: 
+                        <span class="text-white" id="blood_sugar_level"></span>
+                    </span>
+                </div>
 
-                        <div class="table-responsive" id="table">
-                            <table class="table">
-                                <thead class="bg-dark">
-                                    <tr>
-                                        <th class="small">Meal</th>
-                                        <th class="small">Food</th>
-                                        <th class="small">Carbs</th>
-                                        <th class="small">BS lvl</th>
-                                        <th class="small">Time</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $stmt = $conn->prepare(' SELECT 
-                                    tbl_meal.meal,
-                                    tbl_dietary_logging.food_name,
-                                    tbl_dietary_logging.carbohydrates,
-                                    tbl_dietary_logging.blood_sugar_level,
-                                    tbl_dietary_logging.seeker_id,
-                                    tbl_dietary_logging.time
-                                    FROM tbl_dietary_logging
-                                    INNER JOIN tbl_meal ON tbl_dietary_logging.meal_id = tbl_meal.id
-                                    WHERE tbl_dietary_logging.seeker_id = ? ');
-                                    $stmt->bind_param('i', $_SESSION['id']);
-                                    $stmt->execute();
-                                    $result = $stmt->get_result();
-                                    while ($rows = $result->fetch_assoc()) {
-                                        $meal = $rows['meal'];
-                                        $food_name = $rows['food_name'];
-                                        $carbohydrates = $rows['carbohydrates'];
-                                        $blood_sugar_level = $rows['blood_sugar_level'];
-                                        $time = $rows['time'];
-                                        echo '
-                                    <tr>
-                                        <td class="small">' . $meal . '</td>
-                                        <td class="small">' . $food_name . '</td>
-                                        <td class="small">' . $carbohydrates . 'g</td>
-                                        <td class="small">' . $blood_sugar_level . 'mg</td>
-                                        <td class="small">' . $time . '</td>
-                                    </tr>
-                                    ';
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                <div class="d-flex flex-column mt-2 ps-0">
+                    <span class="text-white fw-bold meal" data-meal-id="Lunch">Lunch</span>
+                    <span class="text-secondary small">Time: 
+                        <span class="text-white" id="time"></span>
+                    </span>
+                    <span class="text-secondary small">Rice: 
+                        <span class="text-white" id="rice"></span>
+                    </span>
+                    <span class="text-secondary small">Viand: 
+                        <span class="text-white" id="viand"></span>
+                    </span>
+                    <span class="text-secondary small">Carbohydrates: 
+                        <span class="text-white" id="carbohydrates"></span>
+                    </span>
+                    <span class="text-secondary small">Protein: 
+                        <span class="text-white" id="protein"></span>
+                    </span>
+                    <span class="text-secondary small">Fat: 
+                        <span class="text-white" id="fat"></span>
+                    </span>
+                    <span class="text-secondary small">Fiber: 
+                        <span class="text-white" id="fiber"></span>
+                    </span>
+                    <span class="text-secondary small">Blood Sugar Level: 
+                        <span class="text-white" id="blood_sugar_level"></span>
+                    </span>
+                </div>
+
+                <div class="d-flex flex-column mt-2 ps-0">
+                    <span class="text-white fw-bold meal" data-meal-id="Dinner">Dinner</span>
+                    <span class="text-secondary small">Time: 
+                        <span class="text-white" id="time"></span>
+                    </span>
+                    <span class="text-secondary small">Rice: 
+                        <span class="text-white" id="rice"></span>
+                    </span>
+                    <span class="text-secondary small">Viand: 
+                        <span class="text-white" id="viand"></span>
+                    </span>
+                    <span class="text-secondary small">Carbohydrates: 
+                        <span class="text-white" id="carbohydrates"></span>
+                    </span>
+                    <span class="text-secondary small">Protein: 
+                        <span class="text-white" id="protein"></span>
+                    </span>
+                    <span class="text-secondary small">Fat: 
+                        <span class="text-white" id="fat"></span>
+                    </span>
+                    <span class="text-secondary small">Fiber: 
+                        <span class="text-white" id="fiber"></span>
+                    </span>
+                    <span class="text-secondary small">Blood Sugar Level: 
+                        <span class="text-white" id="blood_sugar_level"></span>
+                    </span>
                 </div>
             </div>
         </main>
@@ -110,7 +149,41 @@ if ($_SESSION['username']) {
         </footer>
     </body>
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
+        $(document).ready(function () {
+            function updateDietaryInfo(selectedDate) {
+                $.ajax({
+                    type: 'POST',
+                    url: '../../manipulations/meal_data_monitoring.php',
+                    data: { selectedDate: selectedDate },
+                    dataType: 'json',
+                    success: function (data) {
+                        $('.meal').each(function () {
+                            var mealId = $(this).data('meal-id');
+                            $(this).find('.time').text(data[mealId.toLowerCase()].time);
+                            $(this).find('.rice').text(data[mealId.toLowerCase()].rice);
+                            $(this).find('.viand').text(data[mealId.toLowerCase()].viand);
+                            $(this).find('.carbohydrates').text(data[mealId.toLowerCase()].carbohydrates);
+                            $(this).find('.protein').text(data[mealId.toLowerCase()].protein);
+                            $(this).find('.fat').text(data[mealId.toLowerCase()].fat);
+                            $(this).find('.fiber').text(data[mealId.toLowerCase()].fiber);
+                            $(this).find('.blood_sugar_level').text(data[mealId.toLowerCase()].blood_sugar_level);
+                        });
+                    },
+                    error: function (error) {
+                        console.error('Error fetching data:', error);
+                    }
+                });
+            }
+            $('#selectedDate').on('change', function () {
+                var selectedDate = $(this).val();
+                updateDietaryInfo(selectedDate);
+            });
+        });
+    </script>
+
+    <!-- <script>
         document.getElementById('day_Records').addEventListener('click', function() {
             var selectedDate = document.getElementById('selectedDate').value;
             var xhr = new XMLHttpRequest();
@@ -122,7 +195,7 @@ if ($_SESSION['username']) {
             xhr.open('GET', '../../manipulations/filter_records_day.php?selectedDate=' + selectedDate, true);
             xhr.send();
         });
-    </script>
+    </script> -->
 
     </html>
 
