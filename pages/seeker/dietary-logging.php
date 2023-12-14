@@ -34,11 +34,18 @@ if ($_SESSION['id']) {
                 <?php
                 if (isset($_GET['success'])) {
                 ?>
-                    <p class="text-white text-center bg-success p-2 mb-3" data-bs-toggle="alert">
+                    <p class="text-white text-center bg-success p-2 mb-2" data-bs-toggle="alert">
                         <?php echo $_GET['success'], 'Dietary logging created successfully.' ?>
                     </p>
                 <?php
                 }
+                if (isset($_GET['exist'])) {
+                    ?>
+                        <p class="text-primary text-center bg-warning p-2 mb-2" data-bs-toggle="alert">
+                            <?php echo $_GET['exist'], 'You have already log with that date.' ?>
+                        </p>
+                    <?php
+                    }
                 if (isset($_GET['error'])) {
                 ?>
                     <p class="text-white text-center bg-danger w-100 p-2 mb-2"><?php echo $_GET['error'] ?></p>
@@ -74,28 +81,32 @@ if ($_SESSION['id']) {
                             <input type="text" name="rice" id="rice" class="ref-input small mb-3 w-100" required>
                         </div>
                         <div class="w-100">
-                            <label class="small mb-2" style="color: #c3f0ff;">Viand</label>
+                            <label class="small mb-2" style="color: #c3f0ff;">Viand / Other Food</label>
                             <input type="text" name="viand" id="viand" class="ref-input small mb-3 w-100" required>
                         </div>
                         <div class="w-100">
-                            <label class="small mb-2" style="color: #c3f0ff;">Carbohydrates</label>
-                            <input type="text" name="carbohydrates" id="carbohydrates" class="ref-input small mb-3 w-100" required>
+                            <label class="small mb-2" style="color: #c3f0ff;">Carbohydrates (grams)</label>
+                            <input type="number" name="carbohydrates" id="carbohydrates" class="ref-input small mb-3 w-100" required>
                         </div>
                         <div class="w-100">
-                            <label class="small mb-2" style="color: #c3f0ff;">Protein</label>
-                            <input type="text" name="protein" id="protein" class="ref-input small mb-3 w-100" required>
+                            <label class="small mb-2" style="color: #c3f0ff;">Protein (grams)</label>
+                            <input type="number" name="protein" id="protein" class="ref-input small mb-3 w-100" required>
                         </div>
                         <div class="w-100">
-                            <label class="small mb-2" style="color: #c3f0ff;">Fat</label>
-                            <input type="text" name="fat" id="fat" class="ref-input small mb-3 w-100" required>
+                            <label class="small mb-2" style="color: #c3f0ff;">Fat (grams)</label>
+                            <input type="number" name="fat" id="fat" class="ref-input small mb-3 w-100" required>
                         </div>
                         <div class="w-100">
-                            <label class="small mb-2" style="color: #c3f0ff;">Fiber</label>
-                            <input type="text" name="fiber" id="fiber" class="ref-input small mb-3 w-100" required>
+                            <label class="small mb-2" style="color: #c3f0ff;">Fiber (grams)</label>
+                            <input type="number" name="fiber" id="fiber" class="ref-input small mb-3 w-100" required>
                         </div>
                         <div class="w-100">
-                            <label class="small mb-2" style="color: #c3f0ff;">Current Blood Sugar Level</label>
-                            <input type="text" name="blood_sugar_level" id="blood_sugar_level" class="ref-input small mb-3 w-100" required>
+                            <label class="small mb-2" style="color: #c3f0ff;">Total Grams</label>
+                            <input type="text" name="total_grams" id="total_grams" value="" class="ref-input small mb-3 w-100" readonly required>
+                        </div>
+                        <div class="w-100">
+                            <label class="small mb-2" style="color: #c3f0ff;">Current Blood Sugar Level (grams)</label>
+                            <input type="number" name="blood_sugar_level" id="blood_sugar_level" class="ref-input small mb-3 w-100" required>
                         </div>
                         <div class="w-100">
                             <?php
@@ -144,29 +155,48 @@ if ($_SESSION['id']) {
 
         <script>
             $(document).ready(function () {
-                $('#meal_id').change(function () {
-                    var mealId = $(this).val();
-                    $.ajax({
-                        url: '../../manipulations/meal_data.php',
-                        method: 'POST',
-                        data: {meal_id: mealId},
-                        dataType: 'json',
-                        success: function (data) {
-                            $('#time').val(data.time);
-                            $('#rice').val(data.rice);
-                            $('#viand').val(data.viand);
-                            $('#carbohydrates').val(data.carbohydrates);
-                            $('#protein').val(data.protein);
-                            $('#fat').val(data.fat);
-                            $('#fiber').val(data.fiber);
-                            
-                        },
-                        error: function (error) {
-                            console.error('Error fetching data: ', error);
-                        }
-                    });
+            // Function to calculate total grams
+            function calculateTotalGrams() {
+                var carbohydrates = parseFloat($('#carbohydrates').val()) || 0;
+                var protein = parseFloat($('#protein').val()) || 0;
+                var fat = parseFloat($('#fat').val()) || 0;
+                var fiber = parseFloat($('#fiber').val()) || 0;
+
+                var totalGrams = carbohydrates + protein + fat + fiber;
+                $('#total_grams').val(totalGrams.toFixed());
+            }
+
+            // Event listener for meal select dropdown change
+            $('#meal_id').change(function () {
+                var mealId = $(this).val();
+                $.ajax({
+                    url: '../../manipulations/meal_data.php',
+                    method: 'POST',
+                    data: { meal_id: mealId },
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#time').val(data.time);
+                        $('#rice').val(data.rice);
+                        $('#viand').val(data.viand);
+                        $('#carbohydrates').val(data.carbohydrates);
+                        $('#protein').val(data.protein);
+                        $('#fat').val(data.fat);
+                        $('#fiber').val(data.fiber);
+                        calculateTotalGrams();
+                        document.getElementById("blood_sugar_level").focus();
+                    },
+                    error: function (error) {
+                        console.error('Error fetching data: ', error);
+                    }
                 });
             });
+
+            // Event listeners for input fields change
+            $('#carbohydrates, #protein, #fat, #fiber').on('input', function () {
+                calculateTotalGrams();
+            });
+        });
+
         </script>
     </body>
 

@@ -33,7 +33,7 @@ if ($_SESSION['id']) {
                 <select class="form-select mb-3 w-50" id="selectedDate">
                     <option disabled selected>- select date -</option>
                     <?php
-                    $stmt = $conn->prepare(' SELECT date FROM tbl_dietary_logging WHERE patient_id = ? ');
+                    $stmt = $conn->prepare(' SELECT date FROM tbl_dietary_logging WHERE patient_id = ? GROUP BY date ');
                     $stmt->bind_param('i', $patient_id);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -43,88 +43,104 @@ if ($_SESSION['id']) {
                     }
                     ?>
                 </select>
-                <div class="d-flex flex-column mt-2 ps-0">
-                    <span class="text-white fw-bold meal" data-meal-id="Breakfast">Breakfast</span>
-                    <span class="text-secondary small">Time: 
-                        <span class="text-white" id="time"></span>
-                    </span>
-                    <span class="text-secondary small">Rice: 
-                        <span class="text-white" id="rice"></span>
-                    </span>
-                    <span class="text-secondary small">Viand: 
-                        <span class="text-white" id="viand"></span>
-                    </span>
-                    <span class="text-secondary small">Carbohydrates: 
-                        <span class="text-white" id="carbohydrates"></span>
-                    </span>
-                    <span class="text-secondary small">Protein: 
-                        <span class="text-white" id="protein"></span>
-                    </span>
-                    <span class="text-secondary small">Fat: 
-                        <span class="text-white" id="fat"></span>
-                    </span>
-                    <span class="text-secondary small">Fiber: 
-                        <span class="text-white" id="fiber"></span>
-                    </span>
-                    <span class="text-secondary small">Blood Sugar Level: 
-                        <span class="text-white" id="blood_sugar_level"></span>
-                    </span>
-                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column mt-2 ps-0">
+                            <span class="text-white text-center fw-bold meal" data-meal-id="breakfast">BREAKFAST</span>
+                            <span class="text-secondary small">Time: 
+                                <span class="text-white" id="breakfast_time"></span>
+                            </span>
+                            <span class="text-secondary small">Rice: 
+                                <span class="text-white" id="breakfast_rice"></span>
+                            </span>
+                            <span class="text-secondary small">Viand / Other Food: 
+                                <span class="text-white" id="breakfast_viand"></span>
+                            </span>
+                            <span class="text-secondary small">Carbohydrates: 
+                                <span class="text-white" id="breakfast_carbohydrates"></span>
+                            </span>
+                            <span class="text-secondary small">Protein: 
+                                <span class="text-white" id="breakfast_protein"></span>
+                            </span>
+                            <span class="text-secondary small">Fat: 
+                                <span class="text-white" id="breakfast_fat"></span>
+                            </span>
+                            <span class="text-secondary small">Fiber: 
+                                <span class="text-white" id="breakfast_fiber"></span>
+                            </span>
+                            <span class="text-secondary small">Grams Obtained: 
+                                <span class="text-white" id="breakfast_total_grams"></span>
+                            </span>
+                            <span class="text-secondary small">Blood Sugar Level: 
+                                <span class="text-white" id="breakfast_blood_sugar_level"></span>
+                            </span>
 
-                <div class="d-flex flex-column mt-2 ps-0">
-                    <span class="text-white fw-bold meal" data-meal-id="Lunch">Lunch</span>
-                    <span class="text-secondary small">Time: 
-                        <span class="text-white" id="time"></span>
-                    </span>
-                    <span class="text-secondary small">Rice: 
-                        <span class="text-white" id="rice"></span>
-                    </span>
-                    <span class="text-secondary small">Viand: 
-                        <span class="text-white" id="viand"></span>
-                    </span>
-                    <span class="text-secondary small">Carbohydrates: 
-                        <span class="text-white" id="carbohydrates"></span>
-                    </span>
-                    <span class="text-secondary small">Protein: 
-                        <span class="text-white" id="protein"></span>
-                    </span>
-                    <span class="text-secondary small">Fat: 
-                        <span class="text-white" id="fat"></span>
-                    </span>
-                    <span class="text-secondary small">Fiber: 
-                        <span class="text-white" id="fiber"></span>
-                    </span>
-                    <span class="text-secondary small">Blood Sugar Level: 
-                        <span class="text-white" id="blood_sugar_level"></span>
-                    </span>
-                </div>
+                            <hr />
 
-                <div class="d-flex flex-column mt-2 ps-0">
-                    <span class="text-white fw-bold meal" data-meal-id="Dinner">Dinner</span>
-                    <span class="text-secondary small">Time: 
-                        <span class="text-white" id="time"></span>
-                    </span>
-                    <span class="text-secondary small">Rice: 
-                        <span class="text-white" id="rice"></span>
-                    </span>
-                    <span class="text-secondary small">Viand: 
-                        <span class="text-white" id="viand"></span>
-                    </span>
-                    <span class="text-secondary small">Carbohydrates: 
-                        <span class="text-white" id="carbohydrates"></span>
-                    </span>
-                    <span class="text-secondary small">Protein: 
-                        <span class="text-white" id="protein"></span>
-                    </span>
-                    <span class="text-secondary small">Fat: 
-                        <span class="text-white" id="fat"></span>
-                    </span>
-                    <span class="text-secondary small">Fiber: 
-                        <span class="text-white" id="fiber"></span>
-                    </span>
-                    <span class="text-secondary small">Blood Sugar Level: 
-                        <span class="text-white" id="blood_sugar_level"></span>
-                    </span>
+                            <span class="text-white text-center fw-bold meal" data-meal-id="lunch">LUNCH</span>
+                            <span class="text-secondary small">Time: 
+                                <span class="text-white" id="lunch_time"></span>
+                            </span>
+                            <span class="text-secondary small">Rice: 
+                                <span class="text-white" id="lunch_rice"></span>
+                            </span>
+                            <span class="text-secondary small">Viand: 
+                                <span class="text-white" id="lunch_viand"></span>
+                            </span>
+                            <span class="text-secondary small">Carbohydrates: 
+                                <span class="text-white" id="lunch_carbohydrates"></span>
+                            </span>
+                            <span class="text-secondary small">Protein: 
+                                <span class="text-white" id="lunch_protein"></span>
+                            </span>
+                            <span class="text-secondary small">Fat: 
+                                <span class="text-white" id="lunch_fat"></span>
+                            </span>
+                            <span class="text-secondary small">Fiber: 
+                                <span class="text-white" id="lunch_fiber"></span>
+                            </span>
+                            <span class="text-secondary small">Grams Obtained: 
+                                <span class="text-white" id="lunch_total_grams"></span>
+                            </span>
+                            <span class="text-secondary small">Blood Sugar Level: 
+                                <span class="text-white" id="lunch_blood_sugar_level"></span>
+                            </span>
+                            
+                            <hr />
+
+                            <span class="text-white text-center fw-bold meal" data-meal-id="dinner">DINNER</span>
+                            <span class="text-secondary small">Time: 
+                                <span class="text-white" id="dinner_time"></span>
+                            </span>
+                            <span class="text-secondary small">Rice: 
+                                <span class="text-white" id="dinner_rice"></span>
+                            </span>
+                            <span class="text-secondary small">Viand: 
+                                <span class="text-white" id="dinner_viand"></span>
+                            </span>
+                            <span class="text-secondary small">Carbohydrates: 
+                                <span class="text-white" id="dinner_carbohydrates"></span>
+                            </span>
+                            <span class="text-secondary small">Protein: 
+                                <span class="text-white" id="dinner_protein"></span>
+                            </span>
+                            <span class="text-secondary small">Fat: 
+                                <span class="text-white" id="dinner_fat"></span>
+                            </span>
+                            <span class="text-secondary small">Fiber: 
+                                <span class="text-white" id="dinner_fiber"></span>
+                            </span>
+                            <span class="text-secondary small">Grams Obtained: 
+                                <span class="text-white" id="dinner_total_grams"></span>
+                            </span>
+                            <span class="text-secondary small">Blood Sugar Level: 
+                                <span class="text-white" id="dinner_blood_sugar_level"></span>
+                            </span>
+
+                            <hr />
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -159,16 +175,16 @@ if ($_SESSION['id']) {
                     data: { selectedDate: selectedDate },
                     dataType: 'json',
                     success: function (data) {
-                        $('.meal').each(function () {
-                            var mealId = $(this).data('meal-id');
-                            $(this).find('.time').text(data[mealId.toLowerCase()].time);
-                            $(this).find('.rice').text(data[mealId.toLowerCase()].rice);
-                            $(this).find('.viand').text(data[mealId.toLowerCase()].viand);
-                            $(this).find('.carbohydrates').text(data[mealId.toLowerCase()].carbohydrates);
-                            $(this).find('.protein').text(data[mealId.toLowerCase()].protein);
-                            $(this).find('.fat').text(data[mealId.toLowerCase()].fat);
-                            $(this).find('.fiber').text(data[mealId.toLowerCase()].fiber);
-                            $(this).find('.blood_sugar_level').text(data[mealId.toLowerCase()].blood_sugar_level);
+                        Object.keys(data).forEach(function (mealId) {
+                            $('#'+mealId.toLowerCase()+'_time').text(data[mealId].time);
+                            $('#'+mealId.toLowerCase()+'_rice').text(data[mealId].rice);
+                            $('#'+mealId.toLowerCase()+'_viand').text(data[mealId].viand);
+                            $('#'+mealId.toLowerCase()+'_carbohydrates').text(data[mealId].carbohydrates + 'g');
+                            $('#'+mealId.toLowerCase()+'_protein').text(data[mealId].protein + 'g');
+                            $('#'+mealId.toLowerCase()+'_fat').text(data[mealId].fat + 'g');
+                            $('#'+mealId.toLowerCase()+'_fiber').text(data[mealId].fiber + 'g');
+                            $('#'+mealId.toLowerCase()+'_total_grams').text(data[mealId].total_grams + 'g');
+                            $('#'+mealId.toLowerCase()+'_blood_sugar_level').text(data[mealId].blood_sugar_level + 'g');
                         });
                     },
                     error: function (error) {

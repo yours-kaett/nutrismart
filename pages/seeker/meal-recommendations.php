@@ -45,23 +45,28 @@ if ($_SESSION['username']) {
                         <div class="tab-pane fade show active" role="tabpanel" id="breakfast-tab">
                             <?php
                             $meal_id = 1;
-                            $stmt = $conn->prepare(' SELECT * FROM tbl_meal_recom WHERE meal_id = ?');
+                            $stmt = $conn->prepare(' SELECT * FROM tbl_dietary_meal WHERE meal_id = ?');
                             $stmt->bind_param('i', $meal_id);
                             $stmt->execute();
                             $result = $stmt->get_result();
                             while ($rows = $result->fetch_assoc()) {
                                 $b += 1;
                                 echo '
-                                <div class="accordion mt-2" id="accordionExample">
+                                <div class="accordion mt-2" id="accordion1">
                                     <div class="accordion-item" style="background-color: transparent !important; color: #c3ffeb !important;">
-                                        <h2 class="accordion-header" id="' . $rows['item_name'] . '" >
-                                            <button style="background-color: transparent !important; color: #c3ffeb !important; padding: 8px;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#item' . $rows['id'] . '" aria-expanded="false" aria-controls="' . $rows['description'] . '">
-                                                ' . $b . ".  " . $rows['item_name'] . '
+                                        <h2 class="accordion-header" id="' . $rows['viand'] . '" >
+                                            <button style="background-color: transparent !important; color: #c3ffeb !important; padding: 8px;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#item' . $rows['id'] . '" aria-expanded="false" aria-controls="' . $rows['ingredients'] . '">
+                                                ' . $b . ".  " . $rows['viand'] . '
                                             </button>
                                         </h2>
-                                        <div id="item' . $rows['id'] . '" class="accordion-collapse collapse" aria-labelledby="' . $rows['item_name'] . '" data-bs-parent="#accordionExample">
+                                        <div id="item' . $rows['id'] . '" class="accordion-collapse collapse" aria-labelledby="' . $rows['viand'] . '" data-bs-parent="#accordion1">
                                             <div class="accordion-body">
-                                                ' . $rows['description'] . '
+                                                Ingredients: <br />' . $rows['ingredients'] . ' <br />
+                                                <hr />
+                                                Carbohydrates: ' . $rows['carbohydrates'] . 'g<br />
+                                                Protein: ' . $rows['protein'] . 'g<br />
+                                                Fat: ' . $rows['fat'] . 'g<br />
+                                                Fiber: ' . $rows['fiber'] . 'g<br />
                                             </div>
                                         </div>
                                     </div>
@@ -74,23 +79,28 @@ if ($_SESSION['username']) {
                         <div class="tab-pane fade" role="tabpanel" id="lunch-tab">
                             <?php
                             $meal_id = 2;
-                            $stmt = $conn->prepare(' SELECT * FROM tbl_meal_recom WHERE meal_id = ?');
+                            $stmt = $conn->prepare(' SELECT * FROM tbl_dietary_meal WHERE meal_id = ?');
                             $stmt->bind_param('i', $meal_id);
                             $stmt->execute();
                             $result = $stmt->get_result();
                             while ($rows = $result->fetch_assoc()) {
                                 $l += 1;
                                 echo '
-                                <div class="accordion mt-2" id="accordionExample">
+                                <div class="accordion mt-2" id="accordion2">
                                     <div class="accordion-item" style="background-color: transparent !important; color: #c3ffeb !important;">
-                                        <h2 class="accordion-header" id="' . $rows['item_name'] . '" >
-                                            <button style="background-color: transparent !important; color: #c3ffeb !important; padding: 8px;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#item' . $rows['id'] . '" aria-expanded="false" aria-controls="' . $rows['description'] . '">
-                                                ' . $l . ".  " . $rows['item_name'] . '
+                                        <h2 class="accordion-header" id="' . $rows['viand'] . '" >
+                                            <button style="background-color: transparent !important; color: #c3ffeb !important; padding: 8px;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#item' . $rows['id'] . '" aria-expanded="false" aria-controls="' . $rows['ingredients'] . '">
+                                                ' . $l . ".  " . $rows['viand'] . '
                                             </button>
                                         </h2>
-                                        <div id="item' . $rows['id'] . '" class="accordion-collapse collapse" aria-labelledby="' . $rows['item_name'] . '" data-bs-parent="#accordionExample">
+                                        <div id="item' . $rows['id'] . '" class="accordion-collapse collapse" aria-labelledby="' . $rows['viand'] . '" data-bs-parent="#accordion2">
                                             <div class="accordion-body">
-                                                ' . $rows['description'] . '
+                                                Ingredients: <br />' . $rows['ingredients'] . ' <br />
+                                                <hr />
+                                                Carbohydrates: ' . $rows['carbohydrates'] . 'g<br />
+                                                Protein: ' . $rows['protein'] . 'g<br />
+                                                Fat: ' . $rows['fat'] . 'g<br />
+                                                Fiber: ' . $rows['fiber'] . 'g<br />
                                             </div>
                                         </div>
                                     </div>
@@ -103,23 +113,28 @@ if ($_SESSION['username']) {
                         <div class="tab-pane fade" role="tabpanel" id="dinner-tab">
                             <?php
                             $meal_id = 3;
-                            $stmt = $conn->prepare(' SELECT * FROM tbl_meal_recom WHERE meal_id = ?');
+                            $stmt = $conn->prepare(' SELECT * FROM tbl_dietary_meal WHERE meal_id = ?');
                             $stmt->bind_param('i', $meal_id);
                             $stmt->execute();
                             $result = $stmt->get_result();
                             while ($rows = $result->fetch_assoc()) {
                                 $d += 1;
                                 echo '
-                                <div class="accordion mt-2" id="accordionExample">
+                                <div class="accordion mt-2" id="accordion3">
                                     <div class="accordion-item" style="background-color: transparent !important; color: #c3ffeb !important;">
-                                        <h2 class="accordion-header" id="' . $rows['item_name'] . '" >
-                                            <button style="background-color: transparent !important; color: #c3ffeb !important; padding: 8px;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#item' . $rows['id'] . '" aria-expanded="false" aria-controls="' . $rows['description'] . '">
-                                                ' . $d . ".  " . $rows['item_name'] . '
+                                        <h2 class="accordion-header" id="' . $rows['viand'] . '" >
+                                            <button style="background-color: transparent !important; color: #c3ffeb !important; padding: 8px;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#item' . $rows['id'] . '" aria-expanded="false" aria-controls="' . $rows['ingredients'] . '">
+                                                ' . $d . ".  " . $rows['viand'] . '
                                             </button>
                                         </h2>
-                                        <div id="item' . $rows['id'] . '" class="accordion-collapse collapse" aria-labelledby="' . $rows['item_name'] . '" data-bs-parent="#accordionExample">
+                                        <div id="item' . $rows['id'] . '" class="accordion-collapse collapse" aria-labelledby="' . $rows['viand'] . '" data-bs-parent="#accordion3">
                                             <div class="accordion-body">
-                                                ' . $rows['description'] . '
+                                                Ingredients: <br />' . $rows['ingredients'] . ' <br />
+                                                <hr />
+                                                Carbohydrates: ' . $rows['carbohydrates'] . 'g<br />
+                                                Protein: ' . $rows['protein'] . 'g<br />
+                                                Fat: ' . $rows['fat'] . 'g<br />
+                                                Fiber: ' . $rows['fiber'] . 'g<br />
                                             </div>
                                         </div>
                                     </div>
