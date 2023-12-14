@@ -25,8 +25,8 @@ if (isset($_POST['time']) && isset($_POST['rice']) &&
     $fat = validate($_POST['fat']);
     $fiber = validate($_POST['fiber']);
 
-    $stmt = $conn->prepare(' SELECT viand FROM tbl_dietary_meal WHERE viand = ? ');
-    $stmt->bind_param('s', $viand);
+    $stmt = $conn->prepare(' SELECT meal_id, viand FROM tbl_dietary_meal WHERE meal_id = ? AND viand = ? ');
+    $stmt->bind_param('is', $meal_id, $viand);
     $stmt->execute();
     $result = $stmt->get_result();
     if (mysqli_num_rows($result) > 0) {

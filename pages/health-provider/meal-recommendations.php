@@ -33,14 +33,14 @@ if ($_SESSION['username']) {
                 if (isset($_GET['success'])) {
                 ?>
                     <p class="text-white text-center bg-success p-2 mb-2" data-bs-toggle="alert">
-                        <?php echo $_GET['success'], 'Dietary logging created successfully.' ?>
+                        <?php echo $_GET['success'], 'Meal recommendation added successfully.' ?>
                     </p>
                 <?php
                 }
                 if (isset($_GET['exist'])) {
                     ?>
                         <p class="text-primary text-center bg-warning p-2 mb-2" data-bs-toggle="alert">
-                            <?php echo $_GET['exist'], 'You have already log with that date.' ?>
+                            <?php echo $_GET['exist'], 'Viand / Food already exist.' ?>
                         </p>
                     <?php
                     }
@@ -137,24 +137,26 @@ if ($_SESSION['username']) {
                             while ($rows = $result->fetch_assoc()) {
                                 $b += 1;
                                 echo '
-                                <div class="accordion mt-2" id="accordion1">
-                                    <div class="accordion-item" style="background-color: transparent !important; color: #c3ffeb !important;">
-                                        <h2 class="accordion-header" id="' . $rows['viand'] . '" >
-                                            <button style="background-color: transparent !important; color: #c3ffeb !important; padding: 8px;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#item' . $rows['id'] . '" aria-expanded="false" aria-controls="' . $rows['ingredients'] . '">
-                                                ' . $b . ".  " . $rows['viand'] . '
-                                            </button>
-                                        </h2>
-                                        <div id="item' . $rows['id'] . '" class="accordion-collapse collapse" aria-labelledby="' . $rows['viand'] . '" data-bs-parent="#accordion1">
-                                            <div class="accordion-body">
-                                                Ingredients: <br />' . $rows['ingredients'] . ' <br />
-                                                <hr />
-                                                Carbohydrates: ' . $rows['carbohydrates'] . 'g<br />
-                                                Protein: ' . $rows['protein'] . 'g<br />
-                                                Fat: ' . $rows['fat'] . 'g<br />
-                                                Fiber: ' . $rows['fiber'] . 'g<br />
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="accordion mt-2 w-100" id="accordion1">
+                                        <div class="accordion-item" style="background-color: transparent !important; color: #c3ffeb !important;">
+                                            <h2 class="accordion-header" id="' . $rows['viand'] . '" >
+                                                <button style="background-color: transparent !important; color: #c3ffeb !important; padding: 8px;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#item' . $rows['id'] . '" aria-expanded="false" aria-controls="' . $rows['ingredients'] . '">
+                                                    ' . $b . ".  " . $rows['viand'] . '
+                                                </button>
+                                            </h2>
+                                            <div id="item' . $rows['id'] . '" class="accordion-collapse collapse" aria-labelledby="' . $rows['viand'] . '" data-bs-parent="#accordion1">
+                                                <div class="accordion-body">
+                                                    Ingredients: <br />' . $rows['ingredients'] . ' <br />
+                                                    <hr />
+                                                    Carbohydrates: ' . $rows['carbohydrates'] . 'g<br />
+                                                    Protein: ' . $rows['protein'] . 'g<br />
+                                                    Fat: ' . $rows['fat'] . 'g<br />
+                                                    Fiber: ' . $rows['fiber'] . 'g<br />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>&nbsp;
                                 </div>';
                             }
                             $stmt->close();
