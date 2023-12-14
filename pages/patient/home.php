@@ -50,10 +50,10 @@ if ($_SESSION['username']) {
                                 </span>
                             </button>
                         </a>
-                        <a href="dietary-monitoring.php">
+                        <a href="dietary-reports.php">
                             <button class="btn-a mb-2">
                                 <span>
-                                    Dietary Monitoring
+                                    Dietary Reports
                                 </span>
                             </button>
                         </a>

@@ -9,7 +9,7 @@
     <main>
         <div class="container ref min-vh-100">
             <img src="../img/logo.png" width="150" alt="Nutrsmart Logo">
-            <h3 class="fw-bold mt-4">Seeker</h3>
+            <h3 class="fw-bold mt-4">Patient</h3>
             <div class="card">
                 <?php
                 if (isset($_GET['success'])) {
@@ -23,7 +23,7 @@
                 <?php
                 }
                 ?>
-                <form action="../manipulations/seeker-signup-check.php" method="POST" class="mb-4">
+                <form action="../manipulations/patient-signup-check.php" method="POST" class="mb-4">
                     <div class="w-100">
                         <input type="email" name="email" placeholder="Email" class="ref-input w-100 me-5 mt-2" required>
                     </div>
@@ -42,7 +42,7 @@
                     </div>
                 </form>
                 <div class="container d-flex justify-content-center flex-column">
-                    <p>Has an existing account? <strong><a href="seeker-login.php">Login here.</a></strong></p>
+                    <p>Has an existing account? <strong><a href="patient-login.php">Login here.</a></strong></p>
                 </div>
             </div>
         </div>

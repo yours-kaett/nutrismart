@@ -9,7 +9,7 @@
     <main>
         <div class="container ref min-vh-100">
             <img src="../img/logo.png" width="90" alt="Nutrismart Logo">
-            <h3 class="mt-4">Seeker</h3>
+            <h3 class="mt-4">Patient</h3>
             <div class="card">
                 <?php
                 if (isset($_GET['error'])) {
@@ -18,7 +18,7 @@
                 <?php
                 }
                 ?>
-                <form action="../manipulations/seeker-login-check.php" method="POST" class="mb-4 needs-validation">
+                <form action="../manipulations/patient-login-check.php" method="POST" class="mb-4 needs-validation">
                     <div class="w-100">
                         <input type="text" name="username" placeholder="Username" class="ref-input mb-3 w-100 me-5 mt-3">
                     </div>
@@ -32,7 +32,7 @@
                     </div>
                 </form>
                 <div class="container d-flex justify-content-center flex-column">
-                    <p>Don't have an account? <strong><a href="seeker-signup.php">Create one.</a></strong></p>
+                    <p>Don't have an account? <strong><a href="patient-signup.php">Create one.</a></strong></p>
                     <a href="../index.php" class="d-flex justify-content-start">
                         <i class="bi bi-arrow-left"></i>&nbsp;Back
                     </a>

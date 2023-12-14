@@ -145,6 +145,7 @@ if ($_SESSION['username']) {
                         </div>
                     </div>
                 </div>
+            </div>
         </main>
         <footer>
             <div class="d-flex align-items-center justify-content-between bottom-0 fixed-bottom px-3">
@@ -160,7 +161,7 @@ if ($_SESSION['username']) {
                 <a href="#" style="color: #c3ffeb !important;">
                     <i class="bi bi-basket-fill fs-4"></i>
                 </a>
-                <a href="dietary-monitoring.php">
+                <a href="dietary-reports.php">
                     <i class="bi bi-bar-chart-line fs-4"></i>
                 </a>
             </div>

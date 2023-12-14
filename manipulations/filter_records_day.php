@@ -29,11 +29,11 @@ if (isset($_GET['selectedDate'])) {
         tbl_dietary_logging.food_name,
         tbl_dietary_logging.carbohydrates,
         tbl_dietary_logging.blood_sugar_level,
-        tbl_dietary_logging.seeker_id,
+        tbl_dietary_logging.patient_id,
         tbl_dietary_logging.time
         FROM tbl_dietary_logging
         INNER JOIN tbl_meal ON tbl_dietary_logging.meal_id = tbl_meal.id
-        WHERE tbl_dietary_logging.seeker_id = ?
+        WHERE tbl_dietary_logging.patient_id = ?
         AND tbl_dietary_logging.year = ?
         AND tbl_dietary_logging.month = ?
         AND tbl_dietary_logging.day = ? ');
@@ -63,8 +63,8 @@ if (isset($_GET['selectedDate'])) {
     
     echo '</tbody> </table>';
 
-    $stmt = $conn->prepare(' SELECT SUM(carbohydrates) AS total_carbs, SUM(blood_sugar_level) AS total_bs, seeker_id
-    FROM tbl_dietary_logging WHERE seeker_id = ? AND year = ? AND month = ? AND day = ?');
+    $stmt = $conn->prepare(' SELECT SUM(carbohydrates) AS total_carbs, SUM(blood_sugar_level) AS total_bs, patient_id
+    FROM tbl_dietary_logging WHERE patient_id = ? AND year = ? AND month = ? AND day = ?');
     $stmt->bind_param('iiii', $_SESSION['id'], $selectedYear, $selectedMonth, $selectedDay);
     $stmt->execute();
     $result = $stmt->get_result();

@@ -15,24 +15,24 @@ if (isset($_POST['email']) && isset($_POST['username']) && isset($_POST['passwor
     $username = validate($_POST['username']);
     $password = validate($_POST['password']);
 
-    $stmt = $conn->prepare("SELECT * FROM tbl_seeker WHERE username = ?");
+    $stmt = $conn->prepare("SELECT * FROM tbl_patient WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if (mysqli_num_rows($result) > 0) {
-        header("Location: ../pages/seeker-signup.php?error=Username already taken.");
+        header("Location: ../pages/patient-signup.php?error=Username already taken.");
         exit();
     } else {
         $password = md5($password);
-        $stmt = $conn->prepare("INSERT INTO tbl_seeker (email, username, password) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO tbl_patient (email, username, password) VALUES (?, ?, ?)");
         $stmt->bind_param('sss', $email, $username, $password);
         $stmt->execute();
         $result = $stmt->get_result();
-        header("Location: ../pages/seeker-signup.php?success");
+        header("Location: ../pages/patient-signup.php?success");
         exit();
     }
 } else {
-    header("Location: ../pages/seeker-signup.php");
+    header("Location: ../pages/patient-signup.php");
     exit();
 }

@@ -19,7 +19,7 @@
             <h3 class="mt-4 fw-bold">NutriSmart</h3>
             <div class="card mt-3">
                 <div class="w-100 d-flex justify-content-center flex-column">
-                    <a href="pages/seeker-login.php">
+                    <a href="pages/patient-login.php">
                         <button class="btn-a mb-2">
                             <span>
                                 <i class="bi bi-bandaid fs-5"></i>&nbsp; Patient

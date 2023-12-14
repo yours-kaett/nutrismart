@@ -29,7 +29,7 @@ if ($_SESSION['id']) {
         </header>
         <main>
             <div class="ref mt-5 mb-5 min-vh-100">
-                <h3 class="fw-bold mt-5 mb-4">Dietary Monitoring</h3>
+                <h3 class="fw-bold mt-5 mb-4">Dietary Reports</h3>
                 <select class="form-select mb-3 w-50" id="selectedDate">
                     <option disabled selected>- select date -</option>
                     <?php
@@ -139,6 +139,15 @@ if ($_SESSION['id']) {
 
                             <hr />
 
+                            <span class="text-white small">
+                                <span class="text-white fw-bold">DATE: </span>
+                                <span id="date"></span>
+                            </span>
+                            <span class="text-white small mb-5">
+                                <span class="text-white fw-bold">OVERALL GRAMS OBTAINED: </span> 
+                                <span id="overall_grams"></span>
+                            </span>
+
                         </div>
                     </div>
                 </div>
@@ -158,7 +167,7 @@ if ($_SESSION['id']) {
                 <a href="meal-recommendations.php">
                     <i class="bi bi-basket fs-4"></i>
                 </a>
-                <a href="dietary-monitoring.php" style="color: #c3ffeb !important;">
+                <a href="dietary-reports.php" style="color: #c3ffeb !important;">
                     <i class="bi bi-bar-chart-line-fill fs-4"></i>
                 </a>
             </div>
@@ -171,11 +180,16 @@ if ($_SESSION['id']) {
             function updateDietaryInfo(selectedDate) {
                 $.ajax({
                     type: 'POST',
-                    url: '../../manipulations/meal_data_monitoring.php',
+                    url: '../../manipulations/meal_data_reports.php',
                     data: { selectedDate: selectedDate },
                     dataType: 'json',
                     success: function (data) {
+                        // Initialize total grams
+                        var overallGrams = 0;
+
+                        // Loop through each meal
                         Object.keys(data).forEach(function (mealId) {
+                            // Update individual meal details
                             $('#'+mealId.toLowerCase()+'_time').text(data[mealId].time);
                             $('#'+mealId.toLowerCase()+'_rice').text(data[mealId].rice);
                             $('#'+mealId.toLowerCase()+'_viand').text(data[mealId].viand);
@@ -184,16 +198,25 @@ if ($_SESSION['id']) {
                             $('#'+mealId.toLowerCase()+'_fat').text(data[mealId].fat + 'g');
                             $('#'+mealId.toLowerCase()+'_fiber').text(data[mealId].fiber + 'g');
                             $('#'+mealId.toLowerCase()+'_total_grams').text(data[mealId].total_grams + 'g');
+                            $('#'+mealId.toLowerCase()+'_date').text(data[mealId].date);
                             $('#'+mealId.toLowerCase()+'_blood_sugar_level').text(data[mealId].blood_sugar_level + 'g');
+
+                            // Accumulate total grams
+                            overallGrams += parseFloat(data[mealId].total_grams);
                         });
+
+                        // Update overall grams
+                        $('#overall_grams').text(overallGrams.toFixed() + 'g');
                     },
                     error: function (error) {
                         console.error('Error fetching data:', error);
                     }
                 });
             }
+
             $('#selectedDate').on('change', function () {
                 var selectedDate = $(this).val();
+                document.getElementById("date").textContent = selectedDate;
                 updateDietaryInfo(selectedDate);
             });
         });

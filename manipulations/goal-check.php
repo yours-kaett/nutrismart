@@ -15,14 +15,14 @@ if (isset($_POST['date']) && isset($_POST['title']) && isset($_POST['description
     $title = validate($_POST['title']);
     $description = validate($_POST['description']);
 
-    $stmt = $conn->prepare("INSERT INTO tbl_goals (date, title, description, seeker_id) 
+    $stmt = $conn->prepare("INSERT INTO tbl_goals (date, title, description, patient_id) 
     VALUES (?, ?, ?, ?)");
     $stmt->bind_param('sssi', $date, $title, $description, $_SESSION['id']);
     $stmt->execute();
     $result = $stmt->get_result();
-    header("Location: ../pages/seeker/goals.php?success");
+    header("Location: ../pages/patient/goals.php?success");
     exit();
 } else {
-    header("Location: ../pages/seeker/goals.php?error");
+    header("Location: ../pages/patient/goals.php?error");
     exit();
 }

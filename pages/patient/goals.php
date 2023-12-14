@@ -118,7 +118,7 @@ if ($_SESSION['username']) {
                 <a href="meal-recommendations.php">
                     <i class="bi bi-basket fs-4"></i>
                 </a>
-                <a href="dietary-monitoring.php">
+                <a href="dietary-reports.php">
                     <i class="bi bi-bar-chart-line fs-4"></i>
                 </a>
             </div>

@@ -32,7 +32,7 @@ if (isset($_POST['meal_id']) && isset($_POST['time']) && isset($_POST['rice']) &
     $stmt->execute();
     $result = $stmt->get_result();
     if (mysqli_num_rows($result) > 0) {
-        header("Location: ../pages/seeker/dietary-logging.php?exist");
+        header("Location: ../pages/patient/dietary-logging.php?exist");
         exit();
     } else {
         $stmt = $conn->prepare("INSERT INTO tbl_dietary_logging(meal_id, time, rice, viand, carbohydrates, protein, fat, fiber, total_grams, blood_sugar_level, date, patient_id) 
@@ -40,7 +40,7 @@ if (isset($_POST['meal_id']) && isset($_POST['time']) && isset($_POST['rice']) &
         $stmt->bind_param('issssssssssi', $meal_id, $time, $rice, $viand, $carbohydrates, $protein, $fat, $fiber, $total_grams, $blood_sugar_level, $date, $patient_id);
         $stmt->execute();
         $result = $stmt->get_result();
-        header("Location: ../pages/seeker/dietary-logging.php?success");
+        header("Location: ../pages/patient/dietary-logging.php?success");
         exit();
     }
     

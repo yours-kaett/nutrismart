@@ -13,7 +13,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = validate($_POST['password']);
     $password = md5($password); //Encryption
     try {
-        $stmt = $conn->prepare("SELECT * FROM tbl_seeker WHERE username = ? AND password = ?");
+        $stmt = $conn->prepare("SELECT * FROM tbl_patient WHERE username = ? AND password = ?");
         if (!$stmt) {
             throw new Exception("Database query error: " . $conn->error);
         }
@@ -29,21 +29,21 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 $_SESSION['username'] = $row['username'];
                 $_SESSION['id'] = $row['id']; //Global Use
 
-                header("Location: ../pages/seeker/home.php");
+                header("Location: ../pages/patient/home.php");
                 exit();
             } else {
-                header("Location: ../pages/seeker-login.php?error");
+                header("Location: ../pages/patient-login.php?error");
                 exit();
             }
         } else {
-            header("Location: ../pages/seeker-login.php?error");
+            header("Location: ../pages/patient-login.php?error");
             exit();
         }
     } catch (Exception $e) {
-        header("Location: ../pages/seeker-login.php?error=" . urlencode($e->getMessage()));
+        header("Location: ../pages/patient-login.php?error=" . urlencode($e->getMessage()));
         exit();
     }
 } else {
-    header("Location: ../pages/seeker-login.php");
+    header("Location: ../pages/patient-login.php");
     exit();
 }
