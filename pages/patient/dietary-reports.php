@@ -1,6 +1,8 @@
 <?php
 include '../../db_conn.php';
 session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 if ($_SESSION['id']) {
     $patient_id = $_SESSION['id'];
 ?>
@@ -33,7 +35,7 @@ if ($_SESSION['id']) {
                 <select class="form-select mb-3 w-50" id="selectedDate">
                     <option disabled selected>- select date -</option>
                     <?php
-                    $stmt = $conn->prepare(' SELECT date FROM tbl_dietary_logging WHERE patient_id = ? GROUP BY date ');
+    $stmt = $conn->prepare(' SELECT * FROM tbl_dietary_logging WHERE patient_id = ? GROUP BY date ');
                     $stmt->bind_param('i', $patient_id);
                     $stmt->execute();
                     $result = $stmt->get_result();

@@ -40,12 +40,12 @@ if ($_SESSION['id']) {
                 <?php
                 }
                 if (isset($_GET['exist'])) {
-                    ?>
-                        <p class="text-primary text-center bg-warning p-2 mb-2" data-bs-toggle="alert">
-                            <?php echo $_GET['exist'], 'You have already log with that date.' ?>
-                        </p>
-                    <?php
-                    }
+                ?>
+                    <p class="text-white text-center bg-danger p-2 mb-2" data-bs-toggle="alert">
+                        <?php echo $_GET['exist'], 'Dietary log already exist based on date.' ?>
+                    </p>
+                <?php
+                }
                 if (isset($_GET['error'])) {
                 ?>
                     <p class="text-white text-center bg-danger w-100 p-2 mb-2"><?php echo $_GET['error'] ?></p>
@@ -154,49 +154,50 @@ if ($_SESSION['id']) {
         <script src="../../script.js"></script>
 
         <script>
-            $(document).ready(function () {
-            // Function to calculate total grams
-            function calculateTotalGrams() {
-                var carbohydrates = parseFloat($('#carbohydrates').val()) || 0;
-                var protein = parseFloat($('#protein').val()) || 0;
-                var fat = parseFloat($('#fat').val()) || 0;
-                var fiber = parseFloat($('#fiber').val()) || 0;
+            $(document).ready(function() {
+                // Function to calculate total grams
+                function calculateTotalGrams() {
+                    var carbohydrates = parseFloat($('#carbohydrates').val()) || 0;
+                    var protein = parseFloat($('#protein').val()) || 0;
+                    var fat = parseFloat($('#fat').val()) || 0;
+                    var fiber = parseFloat($('#fiber').val()) || 0;
 
-                var totalGrams = carbohydrates + protein + fat + fiber;
-                $('#total_grams').val(totalGrams.toFixed());
-            }
+                    var totalGrams = carbohydrates + protein + fat + fiber;
+                    $('#total_grams').val(totalGrams.toFixed());
+                }
 
-            // Event listener for meal select dropdown change
-            $('#meal_id').change(function () {
-                var mealId = $(this).val();
-                $.ajax({
-                    url: '../../manipulations/meal_data.php',
-                    method: 'POST',
-                    data: { meal_id: mealId },
-                    dataType: 'json',
-                    success: function (data) {
-                        $('#time').val(data.time);
-                        $('#rice').val(data.rice);
-                        $('#viand').val(data.viand);
-                        $('#carbohydrates').val(data.carbohydrates);
-                        $('#protein').val(data.protein);
-                        $('#fat').val(data.fat);
-                        $('#fiber').val(data.fiber);
-                        calculateTotalGrams();
-                        document.getElementById("blood_sugar_level").focus();
-                    },
-                    error: function (error) {
-                        console.error('Error fetching data: ', error);
-                    }
+                // Event listener for meal select dropdown change
+                $('#meal_id').change(function() {
+                    var mealId = $(this).val();
+                    $.ajax({
+                        url: '../../manipulations/meal_data.php',
+                        method: 'POST',
+                        data: {
+                            meal_id: mealId
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#time').val(data.time);
+                            $('#rice').val(data.rice);
+                            $('#viand').val(data.viand);
+                            $('#carbohydrates').val(data.carbohydrates);
+                            $('#protein').val(data.protein);
+                            $('#fat').val(data.fat);
+                            $('#fiber').val(data.fiber);
+                            calculateTotalGrams();
+                            document.getElementById("blood_sugar_level").focus();
+                        },
+                        error: function(error) {
+                            console.error('Error fetching data: ', error);
+                        }
+                    });
+                });
+
+                // Event listeners for input fields change
+                $('#carbohydrates, #protein, #fat, #fiber').on('input', function() {
+                    calculateTotalGrams();
                 });
             });
-
-            // Event listeners for input fields change
-            $('#carbohydrates, #protein, #fat, #fiber').on('input', function () {
-                calculateTotalGrams();
-            });
-        });
-
         </script>
     </body>
 

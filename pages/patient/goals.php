@@ -49,7 +49,7 @@ if ($_SESSION['username']) {
                         }
                         ?>
                         <?php
-                        $stmt = $conn->prepare(' SELECT * FROM tbl_goals WHERE seeker_id = ? ');
+    $stmt = $conn->prepare(' SELECT * FROM tbl_goals WHERE patient_id = ? ');
                         $stmt->bind_param('i', $_SESSION['id']);
                         $stmt->execute();
                         $result = $stmt->get_result();
