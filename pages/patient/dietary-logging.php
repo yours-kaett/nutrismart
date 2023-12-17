@@ -30,7 +30,7 @@ if ($_SESSION['id']) {
         </header>
         <main>
             <div class="container ref mt-5">
-                <h3 class="fw-bold mt-5 mb-4">Dietary Logging</h3>
+                <h3 class="fw-bold mt-5 mb-4">Dietary Log</h3>
                 <?php
                 if (isset($_GET['success'])) {
                 ?>
@@ -145,7 +145,7 @@ if ($_SESSION['id']) {
                     <i class="bi bi-basket fs-4"></i>
                 </a>
                 <a href="dietary-reports.php">
-                    <i class="bi bi-bar-chart-line fs-4"></i>
+                    <i class="bi bi-bookmarksfs-4"></i>
                 </a>
             </div>
         </footer>

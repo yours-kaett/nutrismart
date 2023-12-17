@@ -49,7 +49,7 @@ if ($_SESSION['username']) {
                         }
                         ?>
                         <?php
-    $stmt = $conn->prepare(' SELECT * FROM tbl_goals WHERE patient_id = ? ');
+                        $stmt = $conn->prepare(' SELECT * FROM tbl_goals WHERE patient_id = ? ');
                         $stmt->bind_param('i', $_SESSION['id']);
                         $stmt->execute();
                         $result = $stmt->get_result();
@@ -119,7 +119,7 @@ if ($_SESSION['username']) {
                     <i class="bi bi-basket fs-4"></i>
                 </a>
                 <a href="dietary-reports.php">
-                    <i class="bi bi-bar-chart-line fs-4"></i>
+                    <i class="bi bi-bookmarksfs fs-4"></i>
                 </a>
             </div>
             <button class="add-goal" data-bs-toggle="modal" data-bs-target="#addGoalModal">

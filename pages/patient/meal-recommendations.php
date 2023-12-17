@@ -162,7 +162,7 @@ if ($_SESSION['username']) {
                     <i class="bi bi-basket-fill fs-4"></i>
                 </a>
                 <a href="dietary-reports.php">
-                    <i class="bi bi-bar-chart-line fs-4"></i>
+                    <i class="bi bi-bookmarksfs fs-4"></i>
                 </a>
             </div>
         </footer>

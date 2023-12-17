@@ -33,7 +33,7 @@ if ($_SESSION['username']) {
                     <div class="w-100 d-flex justify-content-center flex-column">
                         <a href="dietary-logging.php">
                             <button class="btn-a mb-2">
-                                Dietary Logging
+                                Dietary Log
                             </button>
                         </a>
                         <a href="goals.php">
