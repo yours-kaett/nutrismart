@@ -23,7 +23,7 @@ if ($_SESSION['id']) {
         <header>
             <div class="d-flex align-items-center justify-content-between top-0 fixed-top px-3 py-2">
                 <h3>NutriSmart</h3>
-                <a href="#" class="mx-2" data-bs-toggle="dropdown">
+                <a href="account.php" class="mx-2">
                     <i class="bi bi-person-circle fs-3 fw-bolder"></i>
                 </a>
             </div>
@@ -145,7 +145,7 @@ if ($_SESSION['id']) {
                     <i class="bi bi-basket fs-4"></i>
                 </a>
                 <a href="dietary-reports.php">
-                    <i class="bi bi-bookmarksfs-4"></i>
+                    <i class="bi bi-bookmarks fs-4"></i>
                 </a>
             </div>
         </footer>

@@ -28,38 +28,11 @@ if ($_SESSION['username']) {
         </header>
         <main>
             <div class="container ref min-vh-100">
-                <img src="../../img/logo.png" width="90" alt="Nutrismart Logo">
                 <div class="card mt-4">
                     <div class="w-100 d-flex justify-content-center flex-column">
-                        <a href="dietary-logging.php">
-                            <button class="btn-a mb-2">
-                                Dietary Log
-                            </button>
-                        </a>
-                        <a href="goals.php">
-                            <button class="btn-a mb-2">
-                                <span>
-                                    Set Goals
-                                </span>
-                            </button>
-                        </a>
-                        <a href="meal-recommendations.php">
-                            <button class="btn-a mb-2">
-                                <span>
-                                    Meal Recommendations
-                                </span>
-                            </button>
-                        </a>
-                        <a href="dietary-reports.php">
-                            <button class="btn-a mb-2">
-                                <span>
-                                    Dietary Reports
-                                </span>
-                            </button>
-                        </a>
                         <a href="../../logout.php">
                             <button class="btn-outline">
-                                Logout
+                                <i class="bi bi-power"></i>&nbsp; Logout
                             </button>
                         </a>
                     </div>
@@ -67,8 +40,22 @@ if ($_SESSION['username']) {
             </div>
         </main>
         <footer>
-            <div class="d-flex align-items-center justify-content-center bottom-0 fixed-bottom">
-                <i class="bi bi-house-door-fill fs-2 mb-2" style="color: #c3ffeb;"></i>
+            <div class="d-flex align-items-center justify-content-between fixed-bottom px-3">
+                <a href="home.php">
+                    <i class="bi bi-house-door fs-4"></i>
+                </a>
+                <a href="goals.php">
+                    <i class="bi bi-flag fs-4"></i>
+                </a>
+                <a href="dietary-logging.php">
+                    <i class="bi bi-patch-plus" style="font-size: 40px;"></i>
+                </a>
+                <a href="meal-recommendations.php">
+                    <i class="bi bi-basket fs-4"></i>
+                </a>
+                <a href="dietary-reports.php">
+                    <i class="bi bi-bookmarks fs fs-4"></i>
+                </a>
             </div>
         </footer>
     </body>
