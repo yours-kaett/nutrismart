@@ -211,27 +211,33 @@ if ($_SESSION['id']) {
                         while ($row = $result->fetch_assoc()) {
                             $systolic = $row['systolic'];
                             $diastolic = $row['diastolic'];
-                            $bloodPressureCategory = interpretBloodPressure($systolic, $diastolic);
-                            echo "Systolic: $systolic, Diastolic: $diastolic, Category: $bloodPressureCategory<br>";
+                            // $bloodPressureCategory = interpretBloodPressure($systolic, $diastolic);
+                            echo "
+                            <p class='mt-4 mb-0'>Systolic: 
+                                <span style='font-size: 20px;>$systolic</span>
+                            </p>
+                            <p>Diastolic: 
+                                <span style='font-size: 20px;>$diastolic</span>
+                            </p>";
                         }
                         $result->close();
                     } else {
                         echo "Error: " . $sql . "<br>" . $conn->error;
                     }
-                    function interpretBloodPressure($systolic, $diastolic)
-                    {
-                        if ($systolic < 120 && $diastolic < 80) {
-                            return 'Normal Blood Pressure';
-                        } elseif ($systolic >= 120 && $systolic < 130 && $diastolic < 80) {
-                            return 'Elevated Blood Pressure';
-                        } elseif (($systolic >= 130 && $systolic < 140) || ($diastolic >= 80 && $diastolic < 90)) {
-                            return 'Hypertension Stage 1';
-                        } elseif ($systolic >= 140 || $diastolic >= 90) {
-                            return 'Hypertension Stage 2';
-                        } else {
-                            return 'Hypertensive Crisis';
-                        }
-                    }
+                    // function interpretBloodPressure($systolic, $diastolic)
+                    // {
+                    //     if ($systolic < 120 && $diastolic < 80) {
+                    //         return 'Normal Blood Pressure';
+                    //     } elseif ($systolic >= 120 && $systolic < 130 && $diastolic < 80) {
+                    //         return 'Elevated Blood Pressure';
+                    //     } elseif (($systolic >= 130 && $systolic < 140) || ($diastolic >= 80 && $diastolic < 90)) {
+                    //         return 'Hypertension Stage 1';
+                    //     } elseif ($systolic >= 140 || $diastolic >= 90) {
+                    //         return 'Hypertension Stage 2';
+                    //     } else {
+                    //         return 'Hypertensive Crisis';
+                    //     }
+                    // }
                     $conn->close();
                     ?>
                     <hr>
