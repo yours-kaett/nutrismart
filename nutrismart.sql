@@ -102,9 +102,17 @@ CREATE TABLE IF NOT EXISTS `tbl_goals` (
   `date` varchar(50) NOT NULL,
   `title` varchar(50) NOT NULL,
   `description` text NOT NULL,
-  `seeker_id` int NOT NULL,
+  `patient_id` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tbl_goals`
+--
+
+INSERT INTO `tbl_goals` (`id`, `date`, `title`, `description`, `patient_id`) VALUES
+(1, '2023-12-17', 'test', 'qwertyuiop[', 3),
+(2, '2023-12-18', 'asdfg', 'test', 3);
 
 -- --------------------------------------------------------
 
@@ -139,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `tbl_meal` (
   `id` int NOT NULL AUTO_INCREMENT,
   `meal` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `tbl_meal`
