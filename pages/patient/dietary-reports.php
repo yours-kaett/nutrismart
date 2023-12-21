@@ -28,24 +28,26 @@ if ($_SESSION['id']) {
             </div>
         </header>
         <main>
-            <div class="ref mt-5 mb-5 min-vh-100">
+            <div class="container ref mt-5 mb-5">
                 <h3 class="fw-bold mt-5 mb-4">Dietary Reports</h3>
-                <select class="form-select mb-3 w-50" id="selectedDate">
-                    <option disabled selected>- select date -</option>
-                    <?php
-                    $stmt = $conn->prepare(' SELECT date FROM tbl_dietary_logging WHERE patient_id = ? GROUP BY date ');
-                    $stmt->bind_param('i', $patient_id);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    while ($rows = $result->fetch_assoc()) {
-                        $date = $rows['date'];
-                        echo '<option value=' . $date . '>' . $date . '</option>';
-                    }
-                    ?>
-                </select>
+                <div class="container px-5">
+                    <select class="form-select mb-3 w-100" id="selectedDate">
+                        <option disabled selected>- select date -</option>
+                        <?php
+                        $stmt = $conn->prepare(' SELECT date FROM tbl_dietary_logging WHERE patient_id = ? GROUP BY date ');
+                        $stmt->bind_param('i', $patient_id);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        while ($rows = $result->fetch_assoc()) {
+                            $date = $rows['date'];
+                            echo '<option value=' . $date . '>' . $date . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
                 <div class="card">
                     <div class="card-body">
-                        <div class="d-flex flex-column mt-2 ps-0">
+                        <div class="d-flex flex-column mt-2 px-4">
                             <span class="text-white text-center fw-bold meal" data-meal-id="breakfast">BREAKFAST</span>
                             <span class="text-secondary small">Time: 
                                 <span class="text-white" id="breakfast_time"></span>
@@ -168,7 +170,7 @@ if ($_SESSION['id']) {
                     <i class="bi bi-basket fs-4"></i>
                 </a>
                 <a href="dietary-reports.php" style="color: #c3ffeb !important;">
-                    <i class="bi bi-bar-chart-line-fill fs-4"></i>
+                    <i class="bi bi-calendar2-week-fill fs-4"></i>
                 </a>
             </div>
         </footer>

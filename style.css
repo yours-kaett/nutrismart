@@ -290,6 +290,6 @@ footer .add-goal {
     border: none;
     border-radius: 7px;
     font-size: 25px;
-    background-color: #0000ff;
-    color: #fff;
+    background-color: var(--light-color);
+    color: var(--primary-color);
 }

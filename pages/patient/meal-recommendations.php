@@ -1,7 +1,7 @@
 <?php
 include '../../db_conn.php';
 session_start();
-if ($_SESSION['username']) {
+if ($_SESSION['id']) {
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -162,7 +162,7 @@ if ($_SESSION['username']) {
                     <i class="bi bi-basket-fill fs-4"></i>
                 </a>
                 <a href="dietary-reports.php">
-                    <i class="bi bi-bar-chart-line fs-4"></i>
+                    <i class="bi bi-calendar2-week fs-4"></i>
                 </a>
             </div>
         </footer>

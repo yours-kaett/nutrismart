@@ -31,27 +31,40 @@ if ($_SESSION['id']) {
         <main>
             <div class="container ref mt-5">
                 <h3 class="fw-bold mt-5 mb-4">Dietary Logging</h3>
-                <?php
-                if (isset($_GET['success'])) {
-                ?>
-                    <p class="text-white text-center bg-success p-2 mb-2" data-bs-toggle="alert">
-                        <?php echo $_GET['success'], 'Dietary logging created successfully.' ?>
-                    </p>
-                <?php
-                }
-                if (isset($_GET['exist'])) {
+                <div class="container w-100">
+                    <?php
+                    if (isset($_GET['success'])) {
                     ?>
-                        <p class="text-primary text-center bg-warning p-2 mb-2" data-bs-toggle="alert">
-                            <?php echo $_GET['exist'], 'You have already log with that date.' ?>
+                        <p class="alert d-flex align-items-center justify-content-between rounded-0 text-white text-center bg-success p-2 mb-2" data-bs-toggle="alert">
+                            <?php echo $_GET['success'], "Dietary logging created successfully." ?>
+                            <a href="dietary-logging.php">
+                                <button type="button" class="btn-close" role="button"></button>
+                            </a>
                         </p>
                     <?php
                     }
-                if (isset($_GET['error'])) {
-                ?>
-                    <p class="text-white text-center bg-danger w-100 p-2 mb-2"><?php echo $_GET['error'] ?></p>
-                <?php
-                }
-                ?>
+                    if (isset($_GET['exist'])) {
+                        ?>
+                            <p class="alert d-flex align-items-center justify-content-between rounded-0 text-primary text-center bg-warning p-2 mb-2" data-bs-toggle="alert">
+                                <?php echo $_GET['exist'], "You've already log a meal with that date." ?>
+                                <a href="dietary-logging.php">
+                                    <button type="button" class="btn-close" role="button"></button>
+                                </a>
+                            </p>
+                        <?php
+                        }
+                    if (isset($_GET['error'])) {
+                    ?>
+                        <p class="alert d-flex align-items-center justify-content-between rounded-0 text-white text-center bg-danger w-100 p-2 mb-2">
+                            <?php echo $_GET['error'], "Unknown error occured." ?>
+                            <a href="dietary-logging.php">
+                                <button type="button" class="btn-close" role="button"></button>
+                            </a>
+                        </p>
+                    <?php
+                    }
+                    ?>
+                </div>
                 <div class="card mt-2">
                     <form action="../../manipulations/dietary-logging-check.php" method="POST" class="dietary-logs p-4">
                         <div class="w-100">
@@ -83,6 +96,10 @@ if ($_SESSION['id']) {
                         <div class="w-100">
                             <label class="small mb-2" style="color: #c3f0ff;">Viand / Other Food</label>
                             <input type="text" name="viand" id="viand" class="ref-input small mb-3 w-100" required>
+                        </div>
+                        <div class="w-100">
+                            <label class="small mb-2" style="color: #c3f0ff;">Ingredients</label>
+                            <textarea name="ingredients" id="ingredients" class="ref-input small mb-3 w-100 text-start" cols="30" rows="3" required></textarea>
                         </div>
                         <div class="w-100">
                             <label class="small mb-2" style="color: #c3f0ff;">Carbohydrates (grams)</label>
@@ -145,7 +162,7 @@ if ($_SESSION['id']) {
                     <i class="bi bi-basket fs-4"></i>
                 </a>
                 <a href="dietary-reports.php">
-                    <i class="bi bi-bar-chart-line fs-4"></i>
+                    <i class="bi bi-calendar2-week fs-4"></i>
                 </a>
             </div>
         </footer>
@@ -178,6 +195,7 @@ if ($_SESSION['id']) {
                         $('#time').val(data.time);
                         $('#rice').val(data.rice);
                         $('#viand').val(data.viand);
+                        $('#ingredients').val(data.ingredients);
                         $('#carbohydrates').val(data.carbohydrates);
                         $('#protein').val(data.protein);
                         $('#fat').val(data.fat);

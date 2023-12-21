@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 13, 2023 at 10:57 PM
+-- Generation Time: Dec 14, 2023 at 06:05 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -31,30 +31,64 @@ DROP TABLE IF EXISTS `tbl_dietary_logging`;
 CREATE TABLE IF NOT EXISTS `tbl_dietary_logging` (
   `id` int NOT NULL AUTO_INCREMENT,
   `meal_id` int NOT NULL,
-  `month` int NOT NULL,
-  `day` int NOT NULL,
-  `year` int NOT NULL,
-  `food_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `carbohydrates` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `blood_sugar_level` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `time` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `seeker_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `seeker_id` (`seeker_id`),
-  KEY `meal_id` (`meal_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `time` varchar(50) NOT NULL,
+  `rice` varchar(50) NOT NULL,
+  `viand` varchar(50) NOT NULL,
+  `carbohydrates` varchar(50) NOT NULL,
+  `protein` varchar(50) NOT NULL,
+  `fat` varchar(50) NOT NULL,
+  `fiber` varchar(50) NOT NULL,
+  `total_grams` varchar(50) NOT NULL,
+  `date` varchar(50) NOT NULL,
+  `patient_id` int NOT NULL,
+  `blood_sugar_level` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `tbl_dietary_logging`
 --
 
-INSERT INTO `tbl_dietary_logging` (`id`, `meal_id`, `month`, `day`, `year`, `food_name`, `carbohydrates`, `blood_sugar_level`, `time`, `seeker_id`) VALUES
-(11, 1, 10, 12, 2023, 'Laswa', '10', '20', '07:04', 1),
-(12, 2, 10, 12, 2023, 'Pinakbet', '15', '30', '12:12', 1),
-(13, 3, 10, 12, 2023, 'Chapsoy', '20', '40', '20:30', 1),
-(14, 1, 10, 13, 2023, 'Tinapay', '5', '10', '07:16', 1),
-(15, 1, 10, 14, 2023, 'laswa', '5', '10', '08:30', 1),
-(16, 2, 1, 1, 2000, 'test', '111', '1111', '12:32', 1);
+INSERT INTO `tbl_dietary_logging` (`id`, `meal_id`, `time`, `rice`, `viand`, `carbohydrates`, `protein`, `fat`, `fiber`, `total_grams`, `date`, `patient_id`, `blood_sugar_level`) VALUES
+(3, 1, '7:00 am', '-', 'Oatmeal Champorado with Fresh Fruits', '40', '7', '4', '6', '57', '2023-12-14', 3, '100'),
+(4, 2, '12:00 pm', 'Plain Rice', 'Grilled Bangus Salad', '15', '20', '10', '5', '50', '2023-12-14', 3, '100'),
+(5, 3, '8:00 pm', 'Plain Rice', 'Tinolang Manok', '30', '20', '5', '3', '58', '2023-12-14', 3, '100');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_dietary_meal`
+--
+
+DROP TABLE IF EXISTS `tbl_dietary_meal`;
+CREATE TABLE IF NOT EXISTS `tbl_dietary_meal` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `meal_id` int NOT NULL,
+  `time` varchar(50) NOT NULL,
+  `rice` varchar(50) NOT NULL,
+  `viand` varchar(50) NOT NULL,
+  `ingredients` varchar(255) NOT NULL,
+  `carbohydrates` varchar(50) NOT NULL,
+  `protein` varchar(50) NOT NULL,
+  `fat` varchar(50) NOT NULL,
+  `fiber` varchar(50) NOT NULL,
+  `hp_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `meal_id` (`meal_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_dietary_meal`
+--
+
+INSERT INTO `tbl_dietary_meal` (`id`, `meal_id`, `time`, `rice`, `viand`, `ingredients`, `carbohydrates`, `protein`, `fat`, `fiber`, `hp_id`) VALUES
+(18, 1, '7:00 am', '-', 'Oatmeal Champorado with Fresh Fruits', '1/2 cup rolled oats, 1 tablespoon cocoa powder, 1-2 tablespoons coconut sugar or sweetener of choice, Fresh fruits (banana slices, cherry).', '40', '7', '4', '6', 3),
+(20, 1, '07:00 am', '-', 'Tofu and Vegetable Scramble', '150g tofu, crumbled, Mixed vegetables (bell peppers, onions, tomatoes), 1 teaspoon turmeric for color and flavor, 1 tablespoon cooking oil.', '10', '15', '10', '3', 3),
+(21, 1, '07:00 am', '-', 'Arroz Caldo with Chicken and Vegetables', '1/2 cup brown rice, 150g boneless, skinless chicken breast, Ginger, garlic, and onions, Mixed vegetables (carrots, zucchini)', '30', '10', '5', '3', 3),
+(22, 2, '12:00 pm', 'Brown Rice', 'Sinigang na Baboy', '50g pork belly, lean cuts, Tamarind-based soup with vegetables (kangkong, radish, eggplant), 1 cup cooked brown rice.', '40', '15', '10', '5', 3),
+(23, 2, '12:00 pm', 'Plain Rice', 'Grilled Bangus Salad', 'Grilled bangus (milkfish), Mixed salad greens, Cucumber, red onion, and tomatoes, Calamansi vinaigrette dressing', '15', '20', '10', '5', 3),
+(24, 3, '8:00 pm', 'Plain Rice', 'Tinolang Manok', '150g chicken breast, Ginger, garlic, and onions, Green papaya slices and malunggay leaves, 1 cup cooked white rice.', '30', '20', '5', '3', 3),
+(25, 3, 'Grilled Tilapia with Mango Salsa', 'Plain Rice', 'Grilled Tilapia with Mango Salsa', 'Grilled tilapia fillet, Fresh mango salsa (mango, red onion, cilantro, lime juice), Steamed okra or kangkong on the side.', '25', '25', '10', '5', 3);
 
 -- --------------------------------------------------------
 
@@ -69,9 +103,30 @@ CREATE TABLE IF NOT EXISTS `tbl_goals` (
   `title` varchar(50) NOT NULL,
   `description` text NOT NULL,
   `seeker_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `seeker_id` (`seeker_id`)
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_health_provider`
+--
+
+DROP TABLE IF EXISTS `tbl_health_provider`;
+CREATE TABLE IF NOT EXISTS `tbl_health_provider` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tbl_health_provider`
+--
+
+INSERT INTO `tbl_health_provider` (`id`, `email`, `username`, `password`) VALUES
+(3, 'health_provider@gmail.com', 'health_provider', '0bc2074c27f74220261bcb7e2312dd6d');
 
 -- --------------------------------------------------------
 
@@ -82,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `tbl_goals` (
 DROP TABLE IF EXISTS `tbl_meal`;
 CREATE TABLE IF NOT EXISTS `tbl_meal` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `meal` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `meal` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -98,78 +153,34 @@ INSERT INTO `tbl_meal` (`id`, `meal`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_meal_recom`
+-- Table structure for table `tbl_patient`
 --
 
-DROP TABLE IF EXISTS `tbl_meal_recom`;
-CREATE TABLE IF NOT EXISTS `tbl_meal_recom` (
+DROP TABLE IF EXISTS `tbl_patient`;
+CREATE TABLE IF NOT EXISTS `tbl_patient` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `item_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `description` text NOT NULL,
-  `meal_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `meal` (`meal_id`),
-  KEY `meal_id` (`meal_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `tbl_meal_recom`
---
-
-INSERT INTO `tbl_meal_recom` (`id`, `item_name`, `description`, `meal_id`) VALUES
-(1, 'Oatmeal', 'Cooked steel-cut oats or rolled oats topped with fresh berries, a sprinkle of chopped nuts, and a drizzle of sugar-free syrup.', 1),
-(2, 'Greek Yogurt Parfait', 'Greek yogurt layered with sliced almonds, unsweetened granola, and a few berries.', 1),
-(3, 'Scrambled Eggs', 'Scramble eggs with spinach, tomatoes, and a dash of low-fat cheese. Serve with whole-grain toast.', 1),
-(4, 'Smoothie', 'Blend spinach, frozen berries, unsweetened almond milk, and a scoop of protein powder or Greek yogurt.', 1),
-(5, 'Avocado Toast', 'Whole-grain toast topped with sliced avocado, a poached egg, and a pinch of salt and pepper.', 1),
-(6, 'Grilled Chicken Salad', 'Grilled chicken breast over a bed of mixed greens with cherry tomatoes, cucumber, and a vinaigrette dressing.', 2),
-(7, 'Quinoa Bowl', 'Cooked quinoa mixed with roasted vegetables, chickpeas, and a tahini dressing.', 2),
-(8, 'Tuna Salad', 'A can of water-packed tuna mixed with diced celery, onion, and a dollop of Greek yogurt, served in lettuce wraps or on whole-grain bread.', 2),
-(9, 'Turkey and Veggie Wrap', 'Whole-grain wrap filled with lean turkey slices, hummus, and plenty of veggies.', 2),
-(10, 'Vegetable Soup', 'A hearty vegetable soup with lentils or beans and a side salad.', 2),
-(11, 'Baked Salmon', 'Baked salmon with a lemon-dill sauce, served with steamed broccoli and quinoa.', 3),
-(12, 'Stir-Fried Tofu', 'Tofu stir-fried with colorful bell peppers, broccoli, and a low-sodium teriyaki sauce, served over brown rice.', 3),
-(13, 'Grilled Chicken with Asparagus', 'Grilled chicken breast with roasted asparagus and a side of mashed cauliflower.', 3),
-(14, 'Spaghetti Squash', 'Spaghetti squash noodles with marinara sauce and lean ground turkey.', 3),
-(15, 'Vegetable Curry', 'A vegetable curry with chickpeas and a side of brown rice.', 3),
-(16, 'Celery and Peanut Butter', 'Celery sticks with a smear of natural peanut butter.', 4),
-(17, 'Cottage Cheese', 'Low-fat cottage cheese with a sprinkle of cinnamon and sliced peaches.', 4),
-(18, 'Carrot Sticks and Hummus', 'Sliced carrots served with hummus for dipping.', 4),
-(19, 'Hard-Boiled Eggs', ' A hard-boiled egg with a pinch of salt and pepper.', 4),
-(20, 'Mixed Nuts', 'A small handful of unsalted mixed nuts for a satisfying crunch.', 4);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_seeker`
---
-
-DROP TABLE IF EXISTS `tbl_seeker`;
-CREATE TABLE IF NOT EXISTS `tbl_seeker` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tbl_seeker`
+-- Dumping data for table `tbl_patient`
 --
 
-INSERT INTO `tbl_seeker` (`id`, `username`, `email`, `password`) VALUES
-(1, '12345', 'test@test.com', '827ccb0eea8a706c4c34a16891f84e7b');
+INSERT INTO `tbl_patient` (`id`, `username`, `email`, `password`) VALUES
+(3, 'patient1', 'test@test.com', '8103cfda42d725cd38e8bdf9610ef9a6');
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `tbl_dietary_logging`
+-- Constraints for table `tbl_dietary_meal`
 --
-ALTER TABLE `tbl_dietary_logging`
-  ADD CONSTRAINT `tbl_dietary_logging_ibfk_1` FOREIGN KEY (`seeker_id`) REFERENCES `tbl_seeker` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tbl_dietary_logging_ibfk_2` FOREIGN KEY (`meal_id`) REFERENCES `tbl_meal` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `tbl_dietary_meal`
+  ADD CONSTRAINT `tbl_dietary_meal_ibfk_2` FOREIGN KEY (`meal_id`) REFERENCES `tbl_meal` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
