@@ -1,7 +1,7 @@
 <?php
 include '../../db_conn.php';
 session_start();
-if ($_SESSION['username']) {
+if ($_SESSION['id']) {
 
 ?>
     <!DOCTYPE html>
@@ -13,7 +13,7 @@ if ($_SESSION['username']) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="../../bootstrap/js/bootstrap.bundle.min.js">
-        <link rel="stylesheet" href="../../bootstrap-icons/bootstrap-icons.css">
+        <link rel="stylesheet" href="../../boxicons/css/boxicons.min.css">
         <link rel="stylesheet" href="../../style.css">
         <link rel="icon" href="../../img/logo.png">
     </head>
@@ -30,46 +30,80 @@ if ($_SESSION['username']) {
         <main>
             <div class="container ref mt-5">
                 <h3 class="fw-bold mt-5 mb-2">Goals</h3>
-                <div class="card">
-                    <div class="card-body">
-                        <?php
-                        if (isset($_GET['success'])) {
-                        ?>
-                            <p class="text-white text-center bg-success p-2 mb-3 w-100" data-bs-toggle="alert">
-                                <?php echo $_GET['success'], 'Goal has been set successfully.' ?>
-                            </p>
-                        <?php
-                        }
-                        if (isset($_GET['error'])) {
-                        ?>
-                            <p class="text-white text-center bg-danger p-2 mb-3 w-100" data-bs-toggle="alert">
-                                <?php echo $_GET['error'], 'Error setting up goal.' ?>
-                            </p>
-                        <?php
-                        }
-                        ?>
-                        <?php
-                        $stmt = $conn->prepare(' SELECT * FROM tbl_goals WHERE patient_id = ? ');
-                        $stmt->bind_param('i', $_SESSION['id']);
-                        $stmt->execute();
-                        $result = $stmt->get_result();
-                        while ($row = $result->fetch_assoc()) {
-                            $date = $row['date'];
-                            $title = $row['title'];
-                            $description = $row['description'];
-                            echo '
-                                    <hr />
+                <div class="w-100 p-4" style="margin-bottom: 120px;">
+                    <?php
+                    if (isset($_GET['success'])) {
+                    ?>
+                        <p class="alert d-flex align-items-center justify-content-between rounded-0 text-white text-center bg-success p-2 mb-4" data-bs-toggle="alert">
+                            <?php echo $_GET['success'], "Goal has been set successfully." ?>
+                            <a href="goals.php">
+                                <button type="button" class="btn-close" role="button"></button>
+                            </a>
+                        </p>
+                    <?php
+                    }
+                    if (isset($_GET['updated'])) {
+                    ?>
+                        <p class="alert d-flex align-items-center justify-content-between rounded-0 text-white text-center bg-success p-2 mb-4" data-bs-toggle="alert">
+                            <?php echo $_GET['updated'], "Goal has been updated successfully." ?>
+                            <a href="goals.php">
+                                <button type="button" class="btn-close" role="button"></button>
+                            </a>
+                        </p>
+                    <?php
+                    }
+                    if (isset($_GET['deleted'])) {
+                    ?>
+                        <p class="alert d-flex align-items-center justify-content-between rounded-0 text-primary text-center bg-warning p-2 mb-4" data-bs-toggle="alert">
+                            <?php echo $_GET['deleted'], "Goal remove successfully." ?>
+                            <a href="goals.php">
+                                <button type="button" class="btn-close" role="button"></button>
+                            </a>
+                        </p>
+                    <?php
+                    }
+                    if (isset($_GET['error'])) {
+                    ?>
+                        <p class="alert d-flex align-items-center justify-content-between rounded-0 text-white text-center bg-danger p-2 mb-4" data-bs-toggle="alert">
+                            <?php echo $_GET['error'], "Error setting up goal." ?>
+                            <a href="goals.php">
+                                <button type="button" class="btn-close" role="button"></button>
+                            </a>
+                        </p>
+                    <?php
+                    }
+                    ?>
+                    <?php
+                    $stmt = $conn->prepare(' SELECT * FROM tbl_goals WHERE patient_id = ? ');
+                    $stmt->bind_param('i', $_SESSION['id']);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    while ($row = $result->fetch_assoc()) {
+                        $id = $row['id'];
+                        $date = $row['date'];
+                        $title = $row['title'];
+                        $description = $row['description'];
+                        echo '
                                     <h6>Date: ' . $date . '</h6>
                                     <h6>Title: ' . $title . '</h6>
                                     <h6>Description: ' . $description . '</h6>
+                                    <a href="edit-goal.php?id=' . $id . '">
+                                        <button class="btn btn-sm btn-primary pb-0 pt-0" type="button">
+                                            <i class="bx bx-pencil"></i>
+                                        </button>
+                                    </a>
+                                    <a href="../../manipulations/delete-goal-check.php?id=' . $id . '">
+                                        <button class="btn btn-sm btn-danger pb-0 pt-0" type="button">
+                                            <i class="bx bx-trash"></i>
+                                        </button>
+                                    </a>
+                                    <hr />
                                 ';
-                        }
-                        ?>
-                    </div>
+                    }
+                    ?>
                 </div>
-
                 <div class="modal" id="addGoalModal" tabindex="-1" aria-labelledby="addGoalModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-dialog">
                         <div class="modal-content rounded-0">
                             <div class="modal-header">
                                 <h6 style="color: #c3f0ff;" class="modal-title" id="addGoalModalLabel">Set Goal</h6>
@@ -77,8 +111,17 @@ if ($_SESSION['username']) {
                             </div>
                             <form action="../../manipulations/goal-check.php" method="POST" class="p-4">
                                 <div class="w-100">
+                                    <?php
+                                    date_default_timezone_set('Asia/Manila');
+                                    $date = date("Y-m-j");
+                                    $time = date("h:m:s");
+                                    ?>
                                     <label class="small" style="color: #c3f0ff;">Date</label>
-                                    <input name="date" type="date" class="ref-input w-100 mb-2" style="font-size: 12px;" id="selectedDate">
+                                    <input name="date" type="date" value="<?php echo $date ?>" class="ref-input small w-100 mb-2" required>
+                                </div>
+                                <div class="w-100">
+                                    <label class="small" style="color: #c3f0ff;">Time</label>
+                                    <input name="time" type="time" value="<?php echo $time ?>" class="ref-input small w-100 mb-2" required>
                                 </div>
                                 <div class="w-100">
                                     <label class="small" style="color: #c3f0ff;">Title</label>
@@ -86,7 +129,7 @@ if ($_SESSION['username']) {
                                 </div>
                                 <div class="w-100 d-flex flex-column mb-3">
                                     <label class="small" style="color: #c3f0ff;" for="description">Description</label>
-                                    <textarea name="description" id="description" cols="42" rows="3" class="small ps-2 pt-2" style="background-color: #012054d4; color: #c3ffeb; border: none;"></textarea>
+                                    <textarea name="description" id="description" placeholder="Type here..." cols="42" rows="3" class="ref-input small ps-2 pt-2 w-100" required></textarea>
                                 </div>
                                 <div class="w-100 mt-2">
                                     <button type="submit" class="btn-login w-100 d-flex align-items-center justify-content-center">
@@ -106,24 +149,24 @@ if ($_SESSION['username']) {
         </main>
         <footer>
             <div class="d-flex align-items-center justify-content-between fixed-bottom px-3">
-                <a href="home.php">
-                    <i class="bi bi-house-door fs-4"></i>
+                <a href="home">
+                    <i class="bx bx-home fs-4"></i>
                 </a>
-                <a href="#" style="color: #c3ffeb !important;">
-                    <i class="bi bi-flag-fill fs-4"></i>
+                <a href="goals.php" style="color: #c3ffeb !important;">
+                    <i class="bx bxs-flag fs-4"></i>
                 </a>
                 <a href="dietary-logging.php">
-                    <i class="bi bi-patch-plus" style="font-size: 40px;"></i>
+                    <i class="bx bx-log-in-circle" style="font-size: 50px;"></i>
                 </a>
                 <a href="meal-recommendations.php">
-                    <i class="bi bi-basket fs-4"></i>
+                    <i class="bx bx-podcast fs-4"></i>
                 </a>
                 <a href="dietary-reports.php">
-                    <i class="bi bi-bookmarks fs fs-4"></i>
+                    <i class="bx bx-notepad fs-4"></i>
                 </a>
             </div>
-            <button class="add-goal" data-bs-toggle="modal" data-bs-target="#addGoalModal">
-                <i class="bi bi-pencil-square"></i>
+            <button class="add-goal btn-a pb-0 rounded-0" data-bs-toggle="modal" data-bs-target="#addGoalModal">
+                <i class="bx bx-pencil"></i>
             </button>
         </footer>
 

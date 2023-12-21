@@ -15,8 +15,7 @@ if ($_SESSION['id']) {
         tbl_dietary_logging.protein,
         tbl_dietary_logging.fat,
         tbl_dietary_logging.fiber,
-        tbl_dietary_logging.total_grams,
-        tbl_dietary_logging.blood_sugar_level
+        tbl_dietary_logging.total_grams
         FROM tbl_dietary_logging 
         INNER JOIN tbl_meal ON tbl_dietary_logging.meal_id = tbl_meal.id
         WHERE tbl_dietary_logging.patient_id = ? AND tbl_dietary_logging.date = ?');

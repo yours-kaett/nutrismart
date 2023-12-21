@@ -1,7 +1,7 @@
 <?php
 include '../../db_conn.php';
 session_start();
-if ($_SESSION['username']) {
+if ($_SESSION['id']) {
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -12,7 +12,7 @@ if ($_SESSION['username']) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="../../bootstrap/js/bootstrap.bundle.min.js">
-        <link rel="stylesheet" href="../../bootstrap-icons/bootstrap-icons.css">
+        <link rel="stylesheet" href="../../boxicons/css/boxicons.min.css">
         <link rel="stylesheet" href="../../style.css">
         <link rel="icon" href="../../img/logo.png">
     </head>
@@ -22,7 +22,7 @@ if ($_SESSION['username']) {
             <div class="d-flex align-items-center justify-content-between top-0 fixed-top px-3 py-2">
                 <h3>NutriSmart</h3>
                 <a href="account.php" class="mx-2">
-                    <i class="bi bi-person-circle fs-3 fw-bolder"></i>
+                    <i class="bx bx-user-circle fs-2"></i>
                 </a>
             </div>
         </header>
@@ -148,21 +148,21 @@ if ($_SESSION['username']) {
             </div>
         </main>
         <footer>
-            <div class="d-flex align-items-center justify-content-between bottom-0 fixed-bottom px-3">
-                <a href="home.php">
-                    <i class="bi bi-house-door fs-4"></i>
+            <div class="d-flex align-items-center justify-content-between fixed-bottom px-3">
+                <a href="home">
+                    <i class="bx bx-home fs-4"></i>
                 </a>
                 <a href="goals.php">
-                    <i class="bi bi-flag fs-4"></i>
+                    <i class="bx bx-flag fs-4"></i>
                 </a>
                 <a href="dietary-logging.php">
-                    <i class="bi bi-patch-plus" style="font-size: 40px;"></i>
+                    <i class="bx bx-log-in-circle" style="font-size: 50px;"></i>
                 </a>
-                <a href="#" style="color: #c3ffeb !important;">
-                    <i class="bi bi-basket-fill fs-4"></i>
+                <a href="meal-recommendations.php" style="color: #c3ffeb !important;">
+                    <i class="bx bx-podcast fs-4"></i>
                 </a>
                 <a href="dietary-reports.php">
-                    <i class="bi bi-bookmarks fs fs-4"></i>
+                    <i class="bx bx-notepad fs-4"></i>
                 </a>
             </div>
         </footer>
