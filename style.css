@@ -5,13 +5,13 @@
     --light-color: #c3f0ff;
     --gray-color: #5e5e5e;
     --light-gray-color: #ababab;
-    --red-color: #a20000;
+    --red-color: #ff0000;
 }
 
 body {
     font-family: "Open Sans", sans-serif;
     background: var(--primary-color);
-    color: #444444;
+    color: #504f4f;
 }
 
 header div {
@@ -267,6 +267,10 @@ p {
     border-radius: 50%;
     display: none;
     z-index: 9999;
+}
+
+.container p {
+    color: var(--light-color);
 }
 
 

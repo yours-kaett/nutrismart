@@ -13,7 +13,7 @@ if ($_SESSION['id']) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="../../bootstrap/js/bootstrap.bundle.min.js">
-        <link rel="stylesheet" href="../../bootstrap-icons/bootstrap-icons.css">
+        <link rel="stylesheet" href="../../boxicons/css/boxicons.min.css">
         <link rel="stylesheet" href="../../style.css">
         <link rel="icon" href="../../img/logo.png">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -24,7 +24,7 @@ if ($_SESSION['id']) {
             <div class="d-flex align-items-center justify-content-between top-0 fixed-top px-3 py-2">
                 <h3>NutriSmart</h3>
                 <a href="account.php" class="mx-2">
-                    <i class="bi bi-person-circle fs-3 fw-bolder"></i>
+                    <i class="bx bx-user-circle fs-2"></i>
                 </a>
             </div>
         </header>
@@ -121,10 +121,10 @@ if ($_SESSION['id']) {
                             <label class="small mb-2" style="color: #c3f0ff;">Total Grams</label>
                             <input type="text" name="total_grams" id="total_grams" value="" class="ref-input small mb-3 w-100" readonly required>
                         </div>
-                        <div class="w-100">
+                        <!-- <div class="w-100">
                             <label class="small mb-2" style="color: #c3f0ff;">Current Blood Sugar Level (grams)</label>
                             <input type="number" name="blood_sugar_level" id="blood_sugar_level" class="ref-input small mb-3 w-100" required>
-                        </div>
+                        </div> -->
                         <div class="w-100">
                             <?php
                             date_default_timezone_set('Asia/Manila');
@@ -149,20 +149,20 @@ if ($_SESSION['id']) {
         </main>
         <footer>
             <div class="d-flex align-items-center justify-content-between fixed-bottom px-3">
-                <a href="home.php">
-                    <i class="bi bi-house-door fs-4"></i>
+                <a href="home">
+                    <i class="bx bx-home fs-4"></i>
                 </a>
                 <a href="goals.php">
-                    <i class="bi bi-flag fs-4"></i>
+                    <i class="bx bx-flag fs-4"></i>
                 </a>
                 <a href="dietary-logging.php" style="color: #c3ffeb !important;">
-                    <i class="bi bi-patch-plus-fill" style="font-size: 40px;"></i>
+                    <i class="bx bxs-log-in-circle" style="font-size: 50px;"></i>
                 </a>
                 <a href="meal-recommendations.php">
-                    <i class="bi bi-basket fs-4"></i>
+                    <i class="bx bx-podcast fs-4"></i>
                 </a>
                 <a href="dietary-reports.php">
-                    <i class="bi bi-calendar2-week fs-4"></i>
+                    <i class="bx bx-notepad fs-4"></i>
                 </a>
             </div>
         </footer>

@@ -6,7 +6,7 @@ session_start();
 if (isset($_POST['meal_id']) && isset($_POST['time']) && isset($_POST['rice']) && 
     isset($_POST['viand']) && isset($_POST['ingredients']) && isset($_POST['carbohydrates']) && 
     isset($_POST['protein']) && isset($_POST['fat']) && isset($_POST['fiber']) && 
-    isset($_POST['total_grams']) && isset($_POST['blood_sugar_level']) && isset($_POST['date'])) {
+    isset($_POST['total_grams']) && isset($_POST['date'])) {
     function validate($data)
     {
         $data = trim($data);
@@ -25,7 +25,6 @@ if (isset($_POST['meal_id']) && isset($_POST['time']) && isset($_POST['rice']) &
     $fat = validate($_POST['fat']);
     $fiber = validate($_POST['fiber']);
     $total_grams = validate($_POST['total_grams']);
-    $blood_sugar_level = validate($_POST['blood_sugar_level']);
     $date = validate($_POST['date']);
 
     $stmt = $conn->prepare('SELECT meal_id, date FROM tbl_dietary_logging WHERE meal_id = ? AND date = ?');
@@ -36,9 +35,9 @@ if (isset($_POST['meal_id']) && isset($_POST['time']) && isset($_POST['rice']) &
         header("Location: ../pages/patient/dietary-logging.php?exist");
         exit();
     } else {
-        $stmt = $conn->prepare("INSERT INTO tbl_dietary_logging(meal_id, time, rice, viand, ingredients, carbohydrates, protein, fat, fiber, total_grams, blood_sugar_level, date, patient_id) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param('isssssssssssi', $meal_id, $time, $rice, $viand, $ingredients, $carbohydrates, $protein, $fat, $fiber, $total_grams, $blood_sugar_level, $date, $patient_id);
+        $stmt = $conn->prepare("INSERT INTO tbl_dietary_logging(meal_id, time, rice, viand, ingredients, carbohydrates, protein, fat, fiber, total_grams, date, patient_id) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param('issssssssssi', $meal_id, $time, $rice, $viand, $ingredients, $carbohydrates, $protein, $fat, $fiber, $total_grams, $date, $patient_id);
         $stmt->execute();
         $result = $stmt->get_result();
         header("Location: ../pages/patient/dietary-logging.php?success");
