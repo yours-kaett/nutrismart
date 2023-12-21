@@ -127,7 +127,7 @@ if ($_SESSION['id']) {
                     ?>
                     <p class="pt-4">Glucose Levels</p>
                     <div class="px-4 chart-container">
-                        <div style="width: <?php echo $glucose_created_at * 0.8 ?>px;">
+                        <div style="width: <?php echo $glucose_created_at ?>px;">
                             <canvas id="glucoseChart"></canvas>
                         </div>
                     </div>
@@ -169,7 +169,7 @@ if ($_SESSION['id']) {
                         }
                         echo "
                         <p class='mt-4 mb-0'>Current Glucose Level: 
-                            <span style='font-size: 20px; color: $indicatorColor'>$currentGlucose</span>
+                            <span style='font-size: 20px;'>$currentGlucose</span>
                         </p>
                         <p>Status: 
                             <span style='font-size: 20px; color: $indicatorColor'>$status</span>
@@ -181,7 +181,7 @@ if ($_SESSION['id']) {
 
                     <p class="pt-4">Blood Pressures</p>
                     <div class="px-4 chart-container">
-                        <div style="width: <?php echo $bp_created_at * 0.8 ?>px;">
+                        <div style="width: <?php echo $bp_created_at ?>px;">
                             <canvas id="bpChart"></canvas>
                         </div>
                     </div>
@@ -193,17 +193,45 @@ if ($_SESSION['id']) {
                     if ($result->num_rows > 0) {
                         $bp_created_at = [];
                         $systolicValues = [];
+                        $diastolicValues = [];
                         while ($row = $result->fetch_assoc()) {
                             $bp_created_at[] = $row['created_at'];
                             $systolicValues[] = $row['systolic'];
-                            // $diastolicValues[] = $row['diastolic'];
+                            $diastolicValues[] = $row['diastolic'];
                         }
                     } else {
                         echo "No blood pressure data available";
                     }
                     $stmt->close();
+                    function interpretBloodPressure($systolic, $diastolic)
+                    {
+                        $result = [];
 
-                    $stmt = $conn->prepare(' SELECT systolic, diastolic FROM tbl_blood_pressures WHERE patient_id = ? ORDER BY created_at DESC LIMIT 1 ');
+                        if ($systolic < 120 && $diastolic < 80) {
+                            $result['category'] = 'Normal';
+                            $result['color'] = '#00ff15'; // Green
+                        } elseif ($systolic >= 120 && $systolic < 130 && $diastolic < 80) {
+                            $result['category'] = 'Elevated';
+                            $result['color'] = '#ffae00'; // Yellow
+                        } elseif (($systolic >= 130 && $systolic < 140) || ($diastolic >= 80 && $diastolic < 90)) {
+                            $result['category'] = 'Hypertension Stage 1';
+                            $result['color'] = '#ffae00'; // Yellow
+                        } elseif ($systolic >= 140 || $diastolic >= 90) {
+                            $result['category'] = 'Hypertension Stage 2';
+                            $result['color'] = '#ff0000'; // Red
+                        } else {
+                            $result['category'] = 'Hypertensive Crisis';
+                            $result['color'] = '#ff0000'; // Red
+                        }
+
+                        return $result;
+                    }
+
+                    $result = interpretBloodPressure($systolic, $diastolic);
+                    $bloodPressureCategory = $result['category'];
+                    $indicatorColor = $result['color'];
+
+                    $stmt = $conn->prepare(' SELECT * FROM tbl_blood_pressures WHERE patient_id = ? ORDER BY created_at DESC LIMIT 1 ');
                     $stmt->bind_param('i', $patient_id);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -213,31 +241,18 @@ if ($_SESSION['id']) {
                             $diastolic = $row['diastolic'];
                             // $bloodPressureCategory = interpretBloodPressure($systolic, $diastolic);
                             echo "
-                            <p class='mt-4 mb-0'>Systolic: 
-                                <span style='font-size: 20px;>$systolic</span>
+                            <p class='mt-4 mb-0'>Current Blood Pressure: 
+                                <span style='font-size: 20px;'>$systolic/$diastolic</span>
                             </p>
-                            <p>Diastolic: 
-                                <span style='font-size: 20px;>$diastolic</span>
+                            <p>Status: <span style='font-size: 20px; color: $indicatorColor'>
+                                $bloodPressureCategory</span>
                             </p>";
                         }
                         $result->close();
                     } else {
                         echo "Error: " . $sql . "<br>" . $conn->error;
                     }
-                    // function interpretBloodPressure($systolic, $diastolic)
-                    // {
-                    //     if ($systolic < 120 && $diastolic < 80) {
-                    //         return 'Normal Blood Pressure';
-                    //     } elseif ($systolic >= 120 && $systolic < 130 && $diastolic < 80) {
-                    //         return 'Elevated Blood Pressure';
-                    //     } elseif (($systolic >= 130 && $systolic < 140) || ($diastolic >= 80 && $diastolic < 90)) {
-                    //         return 'Hypertension Stage 1';
-                    //     } elseif ($systolic >= 140 || $diastolic >= 90) {
-                    //         return 'Hypertension Stage 2';
-                    //     } else {
-                    //         return 'Hypertensive Crisis';
-                    //     }
-                    // }
+
                     $conn->close();
                     ?>
                     <hr>
