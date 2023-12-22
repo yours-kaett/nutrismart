@@ -10,7 +10,7 @@ if ($_SESSION['id']) {
     $row = $result->fetch_assoc();
     $glucose_created_at = $row['created_at'];
 
-    $stmt = $conn->prepare(' SELECT * FROM tbl_glucose_levels WHERE patient_id = ?');
+    $stmt = $conn->prepare(' SELECT * FROM tbl_blood_pressures WHERE patient_id = ?');
     $stmt->bind_param('i', $patient_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -66,68 +66,80 @@ if ($_SESSION['id']) {
                     <?php
                     if (isset($_GET['bs_success'])) {
                     ?>
+                    <div class="pt-3">
                         <p class="alert d-flex align-items-center justify-content-between rounded-0 text-white text-center bg-success p-2 mb-0" data-bs-toggle="alert">
                             <?php echo $_GET['bs_success'], "Glucose value has been saved." ?>
                             <a href="home.php">
                                 <button type="button" class="btn-close" role="button"></button>
                             </a>
                         </p>
+                    </div>
                     <?php
                     }
                     if (isset($_GET['bs_error'])) {
                     ?>
+                    <div class="pt-3">
                         <p class="alert d-flex align-items-center justify-content-between rounded-0 text-white text-center bg-danger p-2 mb-0" data-bs-toggle="alert">
                             <?php echo $_GET['error'], "Error saving glucose value." ?>
                             <a href="home.php">
                                 <button type="button" class="btn-close" role="button"></button>
                             </a>
                         </p>
+                    </div>
                     <?php
                     }
                     if (isset($_GET['bp_updated'])) {
                     ?>
+                    <div class="pt-3">
                         <p class="alert d-flex align-items-center justify-content-between rounded-0 text-white text-center bg-success p-2 mb-0" data-bs-toggle="alert">
                             <?php echo $_GET['updated'], "Blood pressure value has been updated." ?>
                             <a href="home.php">
                                 <button type="button" class="btn-close" role="button"></button>
                             </a>
                         </p>
+                    </div>
                     <?php
                     }
                     if (isset($_GET['bp_deleted'])) {
                     ?>
+                    <div class="pt-3">
                         <p class="alert d-flex align-items-center justify-content-between rounded-0 text-primary text-center bg-warning p-2 mb-0" data-bs-toggle="alert">
                             <?php echo $_GET['deleted'], "Blood pressure value remove successfully." ?>
                             <a href="home.php">
                                 <button type="button" class="btn-close" role="button"></button>
                             </a>
                         </p>
+                    </div>
                     <?php
                     }
                     if (isset($_GET['bp_success'])) {
                     ?>
+                    <div class="pt-3">
                         <p class="alert d-flex align-items-center justify-content-between rounded-0 text-white text-center bg-success p-2 mb-0" data-bs-toggle="alert">
                             <?php echo $_GET['success'], "Blood pressure value has been saved." ?>
                             <a href="home.php">
                                 <button type="button" class="btn-close" role="button"></button>
                             </a>
                         </p>
+                    </div>
                     <?php
                     }
                     if (isset($_GET['bp_error'])) {
                     ?>
+                    <div class="pt-3">
                         <p class="alert d-flex align-items-center justify-content-between rounded-0 text-white text-center bg-danger p-2 mb-0" data-bs-toggle="alert">
                             <?php echo $_GET['error'], "Error saving blood pressure value." ?>
                             <a href="home.php">
                                 <button type="button" class="btn-close" role="button"></button>
                             </a>
                         </p>
+                    </div>
                     <?php
                     }
                     ?>
                     <p class="pt-4">Glucose Levels</p>
                     <div class="px-4 chart-container">
-                        <div style="width: <?php echo $glucose_created_at ?>px;">
+                        <div style="width: <?php echo $glucose_created_at * 0.8 ?>px;">
                             <canvas id="glucoseChart"></canvas>
                         </div>
                     </div>
@@ -181,7 +193,7 @@ if ($_SESSION['id']) {
 
                     <p class="pt-4">Blood Pressures</p>
                     <div class="px-4 chart-container">
-                        <div style="width: <?php echo $bp_created_at ?>px;">
+                        <div style="width: <?php echo $bp_created_at * 0.8 ?>px;">
                             <canvas id="bpChart"></canvas>
                         </div>
                     </div>
@@ -227,28 +239,30 @@ if ($_SESSION['id']) {
                         return $result;
                     }
 
-                    $result = interpretBloodPressure($systolic, $diastolic);
-                    $bloodPressureCategory = $result['category'];
-                    $indicatorColor = $result['color'];
+                    // $result = interpretBloodPressure($systolic, $diastolic);
+                    // $bloodPressureCategory = $result['category'];
+                    // $indicatorColor = $result['color'];
 
                     $stmt = $conn->prepare(' SELECT * FROM tbl_blood_pressures WHERE patient_id = ? ORDER BY created_at DESC LIMIT 1 ');
                     $stmt->bind_param('i', $patient_id);
                     $stmt->execute();
                     $result = $stmt->get_result();
-                    if ($result) {
-                        while ($row = $result->fetch_assoc()) {
-                            $systolic = $row['systolic'];
-                            $diastolic = $row['diastolic'];
-                            // $bloodPressureCategory = interpretBloodPressure($systolic, $diastolic);
-                            echo "
+                    if ($result->num_rows > 0) {
+                        $row = $result->fetch_assoc();
+                        $systolic = $row['systolic'];
+                        $diastolic = $row['diastolic'];
+                    
+                        $result = interpretBloodPressure($systolic, $diastolic);
+                        $bloodPressureCategory = $result['category'];
+                        $indicatorColor = $result['color'];
+                    
+                        echo "
                             <p class='mt-4 mb-0'>Current Blood Pressure: 
                                 <span style='font-size: 20px;'>$systolic/$diastolic</span>
                             </p>
                             <p>Status: <span style='font-size: 20px; color: $indicatorColor'>
                                 $bloodPressureCategory</span>
                             </p>";
-                        }
-                        $result->close();
                     } else {
                         echo "Error: " . $sql . "<br>" . $conn->error;
                     }
@@ -336,7 +350,7 @@ if ($_SESSION['id']) {
                                 </button>
                             </div>
                             <div class="w-100 mt-2">
-                                <a href="#" class="btn-outline rounded-4 mt-5 w-100 d-flex align-items-center justify-content-center">
+                                <a href="glucose-levels.php" class="btn-outline rounded-4 mt-5 w-100 d-flex align-items-center justify-content-center">
                                     Track glucose levels
                                 </a>
                             </div>
@@ -382,7 +396,7 @@ if ($_SESSION['id']) {
                                 </button>
                             </div>
                             <div class="w-100 mt-2">
-                                <a href="#" class="btn-outline rounded-4 mt-5 w-100 d-flex align-items-center justify-content-center">
+                                <a href="blood-pressures.php" class="btn-outline rounded-4 mt-5 w-100 d-flex align-items-center justify-content-center">
                                     Track blood pressures
                                 </a>
                             </div>
@@ -447,20 +461,30 @@ if ($_SESSION['id']) {
 
     <script>
         var hexColors = [
-            '#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6',
-            '#1abc9c', '#d35400', '#34495e', '#95a5a6', '#c0392b'
+            '#f39c12', '#c0392b', '#e74c3c', '#3498db', '#9b59b6',
+            '#1abc9c', '#2ecc71', '#34495e', '#95a5a6', '#d35400'
         ];
         var ctx = document.getElementById('bpChart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: <?php echo json_encode($bp_created_at); ?>,
-                datasets: [{
-                    label: 'Blood Pressure',
+                datasets: [
+                {
+                    label: 'Systolic',
                     data: <?php echo json_encode($systolicValues); ?>,
-                    borderColor: hexColors,
+                    borderColor: hexColors[0], // You can choose a color from hexColors array
+                    backgroundColor: hexColors[0] + '80', // Set background color with some transparency
                     borderWidth: 2,
-                }]
+                },
+                {
+                    label: 'Diastolic',
+                    data: <?php echo json_encode($diastolicValues); ?>,
+                    borderColor: hexColors[1], // You can choose another color from hexColors array
+                    backgroundColor: hexColors[1] + '80', // Set background color with some transparency
+                    borderWidth: 2,
+                }
+            ]
             },
             options: {
                 maintainAspectRatio: false, // Allow chart to not maintain aspect ratio

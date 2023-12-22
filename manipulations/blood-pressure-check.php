@@ -14,7 +14,7 @@ if (isset($_POST['created_at']) && isset($_POST['time']) && isset($_POST['systol
     $systolic = validate($_POST['systolic']);
     $diastolic = validate($_POST['diastolic']);
 
-    $stmt = $conn->prepare("INSERT INTO tbl_blood_pressures (systolic, diastolic, time,  patient_id, created_at) 
+    $stmt = $conn->prepare("INSERT INTO tbl_blood_pressures (systolic, diastolic, time, patient_id, created_at) 
     VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param('sssis', $systolic, $diastolic, $time, $_SESSION['id'], $created_at);
     $stmt->execute();
